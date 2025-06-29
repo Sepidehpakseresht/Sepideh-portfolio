@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html{
+  scroll-behavior: smooth;
+}
+
+
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+
+@keyframes slide {
+  0% {
+    transform: translateX(50%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-slide {
+  animation: slide 30s linear infinite;
+}
+
+
+
+.slider-container-loop {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.slider-track-loop {
+  display: flex;
+  animation: slideAlt 30s linear infinite;
+  will-change: transform;
+  pointer-events: auto;
+}
+
+.slider-track-loop img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+
+.slider-track-loop img:hover {
+  transform: scale(1.1);
+}
+
+
+.glow-text {
+  text-shadow: 0 0 8px #22d3ee, 0 0 16px #22d3ee;
+}
+
+.bg-glow {
+  background: radial-gradient(circle at 40% 20%, rgba(34, 211, 238, 0.07), transparent 60%);
+}
+
+
+.text-muted {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+
+.soft-fade {
+  background: radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.03), transparent 60%);
+}
+
+.backdrop-blur-xl {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+
+@keyframes slideAlt {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+
+
+
+
