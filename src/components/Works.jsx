@@ -4,21 +4,21 @@ import Modal from "./Modal";
 const projects = [
   {
     title: "Techimmigrants Landing Page",
-    image: "/public/immigrant.png",
+    image: "/immigrant.png",
     live: "https://tech-immigrants.vercel.app/",
     description:
       "A storytelling-based landing page that introduces immigrant tech professionals. Designed with a clean, dark-futuristic UI and smooth scroll experience.",
   },
   {
     title: "Creative Agency",
-    image: "/public/agancy.png",
+    image: "/agancy.png",
     live: "https://agencylandingpage-theta.vercel.app/",
     description:
       "A fictional agency website built with responsive design, animations, and a modern aesthetic. Focused on typography and layout precision.",
   },
   {
     title: "Sepi Portfolio",
-    image: "/public/portfolio.png",
+    image: "/portfolio.png",
     live: "#", 
     description:
       "My personal portfolio built with React, Tailwind CSS, and Framer Motion. Represents my growth as a front-end developer with a tree metaphor.",
