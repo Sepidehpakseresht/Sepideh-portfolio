@@ -64,6 +64,35 @@ function CodeBracket3D() {
   );
 }
 
+function FloatingCube() {
+  const cubeRef = useRef();
+  
+  useFrame((state) => {
+    if (cubeRef.current) {
+      cubeRef.current.rotation.x += 0.01;
+      cubeRef.current.rotation.y += 0.01;
+      cubeRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
+    }
+  });
+
+  return (
+    <mesh ref={cubeRef} position={[-2, 0, 0]}>
+      <boxGeometry args={[0.8, 0.8, 0.8]} />
+      <meshPhysicalMaterial
+        color="#F96902"
+        roughness={0.2}
+        metalness={0.8}
+        clearcoat={0.9}
+        clearcoatRoughness={0.1}
+        transmission={0.6}
+        thickness={0.5}
+        transparent
+        opacity={0.8}
+      />
+    </mesh>
+  );
+}
+
 const Hero = () => {
   return (
     <section
@@ -72,14 +101,23 @@ const Hero = () => {
       style={{ background: '#0B0E13' }}
     >
       {/* Left: Modern Intro */}
-      <div className="flex-1 flex flex-col gap-8 items-start justify-center max-w-xl">
+      <div className="flex-1 flex flex-col gap-8 items-start justify-center max-w-xl relative">
+        {/* Floating 3D Cube */}
+        <div className="absolute -left-20 top-10 w-32 h-32 opacity-60">
+          <Canvas camera={{ position: [0, 0, 3], fov: 50 }}>
+            <ambientLight intensity={0.3} />
+            <directionalLight position={[1, 1, 1]} intensity={0.5} color="#F96902" />
+            <FloatingCube />
+          </Canvas>
+        </div>
+        
         <motion.h1
           className="text-5xl md:text-6xl font-display font-extrabold text-white mb-2 leading-tight"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          Hi, I’m <span className="text-primary">Sepideh Pakseresht</span>
+          Hi, I'm <span className="text-primary">Sepideh Pakseresht</span>
         </motion.h1>
         <motion.h2
           className="text-2xl md:text-3xl font-semibold text-white/80 mb-4"

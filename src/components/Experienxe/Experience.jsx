@@ -1,58 +1,163 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { FaGraduationCap, FaLaptopCode, FaCertificate, FaTrophy } from 'react-icons/fa';
 
-const courses = [
+const experiences = [
   {
-    title: 'UI/UX Design — Rahnama College',
-    description:
-      'Foundations of user interface and experience design: design thinking, wireframing, prototyping, and usability testing. Real product design cases and user research.',
-    color: '#00D4FF',
+    icon: FaGraduationCap,
+    title: "Computer Science Degree",
+    institution: "University of Tehran",
+    period: "2020 - 2024",
+    description: "Bachelor's degree in Computer Science with focus on software engineering and web development",
+    color: "#F96902",
+    progress: 100
   },
   {
-    title: 'Product Management — Reforge',
-    description:
-      'Product lifecycle, prioritization, stakeholder communication, and roadmap planning. Hands-on insight into balancing business goals with user needs in tech teams.',
-    color: '#FF0080',
+    icon: FaLaptopCode,
+    title: "Front-End Development",
+    institution: "Self-Taught & Online Courses",
+    period: "2022 - Present",
+    description: "Mastered React, TypeScript, Three.js, and modern UI/UX principles through hands-on projects",
+    color: "#F96902",
+    progress: 85
   },
   {
-    title: 'Front-End Bootcamp — Coding Front',
-    description:
-      'Intensive bootcamp: HTML, CSS, JavaScript, SCSS, Bootstrap, Tailwind, Git, React. Real projects, portfolio, and responsive landing pages. Improved code structure and UI/UX thinking.',
-    color: '#7B2CBF',
+    icon: FaCertificate,
+    title: "UI/UX Design Certification",
+    institution: "Coursera & Udemy",
+    period: "2023",
+    description: "Completed advanced courses in user interface design, prototyping, and design systems",
+    color: "#F96902",
+    progress: 90
   },
+  {
+    icon: FaTrophy,
+    title: "Freelance Projects",
+    institution: "Various Clients",
+    period: "2023 - Present",
+    description: "Successfully delivered 10+ client projects with 100% satisfaction rate",
+    color: "#F96902",
+    progress: 75
+  }
 ];
 
-const CoursesExperience = () => {
+const Experience = () => {
   return (
-    <section
-      id="experience"
-      className="relative w-full max-w-7xl mx-auto px-6 py-24 min-h-[60vh] flex items-center justify-center"
-    >
-      <div className="w-full">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-futura font-bold neon-text-blue mb-4">Experience</h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Courses and programs that shaped my approach to product, design, and code.
+    <section id="experience" className="py-20 px-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-display font-extrabold text-white mb-4">
+            Experience & <span className="bg-primary px-4 py-2 rounded-lg">Education</span>
+          </h2>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            My journey in technology and design, from formal education to hands-on experience
           </p>
+        </motion.div>
+
+        {/* Timeline */}
+        <div className="relative">
+          {/* Central Timeline Line */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-primary/20 via-primary to-primary/20"></div>
+          
+          <div className="space-y-12">
+            {experiences.map((exp, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+                className={`relative flex items-center ${
+                  index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
+                }`}
+              >
+                {/* Timeline Node */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-primary rounded-full shadow-orange z-10 flex items-center justify-center">
+                  <exp.icon className="text-white text-xs" />
+                </div>
+
+                {/* Content Card */}
+                <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
+                  <motion.div
+                    whileHover={{ scale: 1.02, y: -5 }}
+                    className="glass rounded-2xl p-6 border border-glass-border shadow-orange hover:shadow-orange/50 transition-all duration-300"
+                  >
+                    {/* Progress Bar */}
+                    <div className="mb-4">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm font-semibold text-primary">Progress</span>
+                        <span className="text-sm text-gray-400">{exp.progress}%</span>
+                      </div>
+                      <div className="w-full bg-surface rounded-full h-2">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${exp.progress}%` }}
+                          transition={{ duration: 1, delay: 0.5 }}
+                          className="bg-primary h-2 rounded-full shadow-orange"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="space-y-3">
+                      <h3 className="text-xl font-bold text-white">{exp.title}</h3>
+                      <div className="flex items-center gap-2 text-primary font-semibold">
+                        <span>{exp.institution}</span>
+                      </div>
+                      <p className="text-sm text-gray-400 font-medium">{exp.period}</p>
+                      <p className="text-gray-300 text-sm leading-relaxed">{exp.description}</p>
+                    </div>
+
+                    {/* Floating Elements */}
+                    <div className="absolute -top-2 -right-2 w-4 h-4 bg-primary/20 rounded-full"></div>
+                    <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-primary/30 rounded-full"></div>
+                  </motion.div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Bottom Decoration */}
+          <motion.div
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="absolute left-1/2 transform -translate-x-1/2 -bottom-8 w-4 h-4 bg-primary rounded-full shadow-orange"
+          />
         </div>
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
-          {courses.map((course, index) => (
+
+        {/* Stats Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6"
+        >
+          {[
+            { number: "4+", label: "Years Learning", icon: "🎓" },
+            { number: "10+", label: "Projects Completed", icon: "💼" },
+            { number: "100%", label: "Client Satisfaction", icon: "⭐" },
+            { number: "24/7", label: "Always Learning", icon: "🚀" }
+          ].map((stat, index) => (
             <motion.div
               key={index}
-              className="glass rounded-2xl border border-glass-border shadow-neon-blue/30 backdrop-blur-xl group cursor-pointer flex flex-col h-full transition-all duration-300"
-              whileHover={{ scale: 1.04, boxShadow: `0 0 32px ${course.color}, 0 0 64px #00D4FF` }}
-              transition={{ duration: 0.3 }}
+              whileHover={{ scale: 1.05 }}
+              className="glass rounded-xl p-6 text-center border border-glass-border"
             >
-              <div className="p-8 flex-1 flex flex-col justify-between">
-                <h3 className="text-lg font-futura font-bold mb-2" style={{ color: course.color }}>{course.title}</h3>
-                <p className="text-sm text-gray-300 mb-4 line-clamp-4">{course.description}</p>
-              </div>
+              <div className="text-3xl mb-2">{stat.icon}</div>
+              <div className="text-2xl font-bold text-primary mb-1">{stat.number}</div>
+              <div className="text-sm text-gray-400">{stat.label}</div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 };
 
-export default CoursesExperience;
+export default Experience;
