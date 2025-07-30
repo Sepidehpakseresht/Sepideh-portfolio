@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
-import RotatingSkillCircle from './RotatingSkillCircle';
+import SkillSemiCircle from './SkillSemiCircle';
 import { sectionCircleData } from '../data/sectionData';
 
 import leaves1 from '../assets/leaves-1.png';
@@ -99,15 +99,15 @@ const About = () => {
           )}
         </AnimatePresence>
         
-        {/* Rotating Skills Circle for About section */}
-        <div className="hidden lg:block">
-          <RotatingSkillCircle
+        {/* Skills Semi-Circle for About section */}
+        <div className="hidden lg:block absolute right-0 bottom-8 z-20">
+          <SkillSemiCircle
             skills={aboutData.skills}
             title={aboutData.title}
+            centerText="journey"
             size="small"
-            position="right"
-            autoRotate={true}
-            rotationSpeed={35}
+            canRotate={true}
+            rotationSpeed={45}
           />
         </div>
       </div>

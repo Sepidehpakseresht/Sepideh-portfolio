@@ -1,7 +1,7 @@
 import { motion as Motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-import RotatingSkillCircle from './RotatingSkillCircle';
+import SkillSemiCircle from './SkillSemiCircle';
 import { sectionCircleData } from '../data/sectionData';
 
 const Hero = () => {
@@ -19,15 +19,15 @@ const Hero = () => {
         transition={{ delay: 0.4, duration: 1.5 }}
       />
       
-      {/* Rotating Skills Circle */}
-      <div className="hidden lg:block">
-        <RotatingSkillCircle
+      {/* Skills Semi-Circle */}
+      <div className="hidden lg:block absolute right-8 top-1/2 -translate-y-1/2 z-20">
+        <SkillSemiCircle
           skills={heroData.skills}
           title={heroData.title}
+          centerText="explore"
           size="medium"
-          position="right"
-          autoRotate={true}
-          rotationSpeed={40}
+          canRotate={true}
+          rotationSpeed={60}
         />
       </div>
       <div className="relative z-10">

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import RotatingSkillCircle from './RotatingSkillCircle';
+import SkillSemiCircle from './SkillSemiCircle';
 import { sectionCircleData } from '../data/sectionData';
 
 const Contact = () => {
@@ -35,15 +35,15 @@ const Contact = () => {
 
   return (
     <section id="contact" className="relative min-h-auto flex items-center justify-center px-4 py-40 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white overflow-hidden">
-      {/* Rotating Skills Circle for Contact section */}
-      <div className="hidden lg:block">
-        <RotatingSkillCircle
+      {/* Skills Semi-Circle for Contact section */}
+      <div className="hidden lg:block absolute left-8 top-1/2 -translate-y-1/2 z-20">
+        <SkillSemiCircle
           skills={contactData.skills}
           title={contactData.title}
+          centerText="connect"
           size="small"
-          position="left"
-          autoRotate={true}
-          rotationSpeed={35}
+          canRotate={true}
+          rotationSpeed={50}
         />
       </div>
       

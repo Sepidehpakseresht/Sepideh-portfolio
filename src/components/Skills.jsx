@@ -1,5 +1,5 @@
 import React from "react";
-import RotatingSkillCircle from "./RotatingSkillCircle";
+import SkillSemiCircle from "./SkillSemiCircle";
 import { sectionCircleData } from "../data/sectionData";
 
 const Skills = () => {
@@ -10,99 +10,70 @@ const Skills = () => {
       id="skills"
       className="relative min-h-screen flex items-center justify-center px-6 py-24 text-white bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 overflow-hidden"
     >
-      {/* Background effects */}
+      {/* Background effects matching the reference image */}
       <div className="absolute inset-0 flex justify-center items-center z-0">
-        <div className="w-[600px] h-[600px] rounded-full bg-cyan-400/5 blur-[100px] animate-pulse" />
+        <div className="w-[800px] h-[800px] rounded-full bg-gradient-to-r from-cyan-400/5 via-purple-400/5 to-cyan-400/5 blur-[100px] animate-pulse" />
       </div>
       
-      {/* Floating particles */}
-      <div className="absolute inset-0 z-0">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-cyan-400/30 rounded-full animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="relative z-10 w-full max-w-6xl mx-auto">
+      <div className="relative z-10 w-full max-w-7xl mx-auto">
+        {/* Main title */}
         <div className="text-center mb-16">
           <h2 className="text-5xl font-bold text-white glow-text mb-4">My Skills</h2>
           <p className="text-cyan-400/80 text-lg max-w-2xl mx-auto">
-            Explore my technical skills and tools. Hover over each skill to learn more about my expertise.
+            Explore my technical expertise through interactive skill visualization
           </p>
         </div>
 
-        {/* Main content area with rotating circle */}
-        <div className="relative flex items-center justify-between min-h-[500px]">
+        {/* Main content with semi-circle exactly like the reference */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
           
           {/* Left side content */}
-          <div className="flex-1 max-w-lg space-y-6">
-            <div className="bg-gray-800/30 backdrop-blur-sm border border-cyan-500/20 rounded-xl p-6">
-              <h3 className="text-2xl font-bold text-cyan-400 mb-4">Frontend Technologies</h3>
-              <p className="text-white/80 leading-relaxed">
-                I specialize in modern frontend development with a focus on creating 
-                interactive, responsive, and user-friendly web applications.
+          <div className="flex-1 max-w-lg space-y-8">
+            <div className="bg-gray-800/30 backdrop-blur-sm border border-cyan-500/20 rounded-xl p-8 hover-lift">
+              <h3 className="text-2xl font-bold text-cyan-400 mb-4">Frontend Development</h3>
+              <p className="text-white/80 leading-relaxed mb-4">
+                I specialize in creating modern, responsive web applications using the latest frontend technologies.
               </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">React</span>
+                <span className="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">JavaScript</span>
+                <span className="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">CSS3</span>
+              </div>
             </div>
 
-            <div className="bg-gray-800/30 backdrop-blur-sm border border-cyan-500/20 rounded-xl p-6">
+            <div className="bg-gray-800/30 backdrop-blur-sm border border-cyan-500/20 rounded-xl p-8 hover-lift">
               <h3 className="text-2xl font-bold text-cyan-400 mb-4">Design & UX</h3>
-              <p className="text-white/80 leading-relaxed">
-                My background in UI/UX design helps me create not just functional, 
-                but beautiful and intuitive user experiences.
+              <p className="text-white/80 leading-relaxed mb-4">
+                My background in UI/UX design ensures every application is both beautiful and user-friendly.
               </p>
-            </div>
-
-            <div className="bg-gray-800/30 backdrop-blur-sm border border-cyan-500/20 rounded-xl p-6">
-              <h3 className="text-2xl font-bold text-cyan-400 mb-4">Always Learning</h3>
-              <p className="text-white/80 leading-relaxed">
-                Technology evolves rapidly, and I'm committed to continuous learning 
-                and staying up-to-date with the latest trends and best practices.
-              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">UI/UX</span>
+                <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">Responsive</span>
+                <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">Modern</span>
+              </div>
             </div>
           </div>
 
-          {/* Rotating Skills Circle */}
-          <div className="flex-1 flex justify-center items-center relative">
-            <RotatingSkillCircle
+          {/* Semi-circle exactly like the reference image */}
+          <div className="flex-1 flex justify-center items-center">
+            <SkillSemiCircle
               skills={skillsData.skills}
               title={skillsData.title}
+              centerText="see more"
               size="large"
-              position="center"
-              autoRotate={true}
-              rotationSpeed={30}
+              canRotate={true}
+              rotationSpeed={50}
             />
           </div>
         </div>
 
-        {/* Additional skills info */}
-        <div className="mt-16 text-center">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <div className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur-sm border border-cyan-500/20 rounded-xl p-6">
-              <div className="text-3xl mb-3">🚀</div>
-              <h4 className="text-lg font-semibold text-white mb-2">Performance</h4>
-              <p className="text-white/70 text-sm">Optimized, fast-loading applications</p>
-            </div>
-            
-            <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-sm border border-purple-500/20 rounded-xl p-6">
-              <div className="text-3xl mb-3">📱</div>
-              <h4 className="text-lg font-semibold text-white mb-2">Responsive</h4>
-              <p className="text-white/70 text-sm">Mobile-first, cross-device compatibility</p>
-            </div>
-            
-            <div className="bg-gradient-to-br from-green-500/10 to-teal-500/10 backdrop-blur-sm border border-green-500/20 rounded-xl p-6">
-              <div className="text-3xl mb-3">✨</div>
-              <h4 className="text-lg font-semibold text-white mb-2">Interactive</h4>
-              <p className="text-white/70 text-sm">Engaging animations and user interactions</p>
-            </div>
-          </div>
+        {/* Bottom description matching the reference layout */}
+        <div className="mt-20 text-center">
+          <p className="text-white/60 text-lg max-w-4xl mx-auto leading-relaxed">
+            From customer support to product management, and now frontend development — 
+            my diverse background gives me a unique perspective on building user-centered applications. 
+            Each skill in my toolkit contributes to creating exceptional digital experiences.
+          </p>
         </div>
       </div>
     </section>

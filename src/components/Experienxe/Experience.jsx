@@ -1,5 +1,5 @@
 import React from 'react';
-import RotatingSkillCircle from '../RotatingSkillCircle';
+import SkillSemiCircle from '../SkillSemiCircle';
 import { sectionCircleData } from '../../data/sectionData';
 
 const courses = [
@@ -28,15 +28,15 @@ const CoursesExperience = () => {
       id="experience"
       className="relative py-24 px-6 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white overflow-hidden"
     >
-      {/* Rotating Skills Circle for Experience section */}
-      <div className="hidden lg:block">
-        <RotatingSkillCircle
+      {/* Skills Semi-Circle for Experience section */}
+      <div className="hidden lg:block absolute right-8 top-1/2 -translate-y-1/2 z-20">
+        <SkillSemiCircle
           skills={experienceData.skills}
           title={experienceData.title}
+          centerText="learning"
           size="medium"
-          position="right"
-          autoRotate={true}
-          rotationSpeed={30}
+          canRotate={true}
+          rotationSpeed={35}
         />
       </div>
       

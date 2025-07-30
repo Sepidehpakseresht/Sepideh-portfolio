@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion as Motion } from "framer-motion";
 import Modal from "./Modal";
-import RotatingSkillCircle from "./RotatingSkillCircle";
+import SkillSemiCircle from "./SkillSemiCircle";
 import { sectionCircleData } from "../data/sectionData"; 
 const projects = [
   {
@@ -36,15 +36,15 @@ export default function Works() {
       id="works"
       className="relative min-h-screen px-6 py-24 text-white bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 overflow-hidden"
     >
-      {/* Rotating Skills Circle for Works section */}
-      <div className="hidden lg:block">
-        <RotatingSkillCircle
+      {/* Skills Semi-Circle for Works section */}
+      <div className="hidden lg:block absolute left-8 top-1/2 -translate-y-1/2 z-20">
+        <SkillSemiCircle
           skills={worksData.skills}
           title={worksData.title}
+          centerText="projects"
           size="medium"
-          position="left"
-          autoRotate={true}
-          rotationSpeed={25}
+          canRotate={true}
+          rotationSpeed={40}
         />
       </div>
       
