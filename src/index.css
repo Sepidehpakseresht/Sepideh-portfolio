@@ -7,13 +7,30 @@ html{
   scroll-behavior: smooth;
 }
 
+/* Enhanced animations for Hero section */
+@keyframes spin-slow {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
 
+@keyframes spin-reverse {
+  from { transform: translate(-50%, -50%) rotate(360deg); }
+  to { transform: translate(-50%, -50%) rotate(0deg); }
+}
 
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: spin-reverse 15s linear infinite;
+}
+
+/* Skills section animations */
 @keyframes scroll {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-
 
 @keyframes slide {
   0% {
@@ -27,8 +44,6 @@ html{
 .animate-slide {
   animation: slide 30s linear infinite;
 }
-
-
 
 .slider-container-loop {
   overflow: hidden;
@@ -50,25 +65,31 @@ html{
   transition: transform 0.3s ease;
 }
 
-
 .slider-track-loop img:hover {
   transform: scale(1.1);
 }
 
+@keyframes slideAlt {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 
+/* Enhanced styling */
 .glow-text {
-  text-shadow: 0 0 8px #22d3ee, 0 0 16px #22d3ee;
+  text-shadow: 0 0 8px #22d3ee, 0 0 16px #22d3ee, 0 0 24px #22d3ee;
 }
 
 .bg-glow {
   background: radial-gradient(circle at 40% 20%, rgba(34, 211, 238, 0.07), transparent 60%);
 }
 
-
 .text-muted {
   color: rgba(255, 255, 255, 0.6);
 }
-
 
 .soft-fade {
   background: radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.03), transparent 60%);
@@ -79,14 +100,22 @@ html{
   -webkit-backdrop-filter: blur(12px);
 }
 
+/* Gradient text animation */
+.text-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
 
-@keyframes slideAlt {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Enhanced hover effects */
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+  transform: translateY(-2px);
 }
 
 
