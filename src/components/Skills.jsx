@@ -1,107 +1,71 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaReact, FaJs, FaNodeJs, FaCss3Alt, FaHtml5, FaGitAlt, FaCube } from 'react-icons/fa';
+import { FaReact, FaJs, FaNodeJs, FaCss3Alt, FaHtml5, FaGitAlt, FaCode } from 'react-icons/fa';
 import { SiTailwindcss, SiTypescript } from 'react-icons/si';
 
 const skills = [
   {
     name: "React",
-    icon: <FaReact className="text-4xl text-neon-blue" />,
-    color: "#00D4FF",
-    short: "Modern UI library for building interactive apps.",
-    details: [
-      "Hooks, Context, and State Management",
-      "Performance Optimization",
-      "Component Architecture"
-    ]
+    icon: <FaReact className="text-4xl text-primary" />,
+    color: "#F96902",
+    snippet: `function App() {\n  return <Component />;\n}`,
+    preview: <div className="w-full h-16 bg-primary/10 rounded-lg flex items-center justify-center text-primary font-bold">React UI</div>
   },
   {
     name: "Three.js",
-    icon: <FaCube className="text-4xl text-neon-pink" />,
-    color: "#FF0080",
-    short: "3D graphics and interactive web experiences.",
-    details: [
-      "3D Scene Creation",
-      "Geometry & Materials",
-      "Animation & Interactivity"
-    ]
+    icon: <FaCode className="text-4xl text-primary" />,
+    color: "#F96902",
+    snippet: `const mesh = new THREE.Mesh(geo, mat);`,
+    preview: <div className="w-full h-16 bg-primary/10 rounded-lg flex items-center justify-center text-primary font-bold">3D Canvas</div>
   },
   {
     name: "Tailwind CSS",
-    icon: <SiTailwindcss className="text-4xl text-neon-purple" />,
-    color: "#7B2CBF",
-    short: "Utility-first CSS for rapid UI development.",
-    details: [
-      "Responsive Design",
-      "Custom Components",
-      "Design Systems"
-    ]
+    icon: <SiTailwindcss className="text-4xl text-primary" />,
+    color: "#F96902",
+    snippet: `<div class=\"bg-primary text-white\">Tailwind</div>`,
+    preview: <div className="w-full h-16 bg-primary/10 rounded-lg flex items-center justify-center text-primary font-bold">Tailwind UI</div>
   },
   {
     name: "JavaScript",
-    icon: <FaJs className="text-4xl text-neon-green" />,
-    color: "#00FF88",
-    short: "Modern ES6+ features and async programming.",
-    details: [
-      "ES6+ Features",
-      "Async/Await",
-      "Functional Programming"
-    ]
+    icon: <FaJs className="text-4xl text-primary" />,
+    color: "#F96902",
+    snippet: `const sum = (a, b) => a + b;`,
+    preview: <div className="w-full h-16 bg-primary/10 rounded-lg flex items-center justify-center text-primary font-bold">JS Logic</div>
   },
   {
     name: "TypeScript",
-    icon: <SiTypescript className="text-4xl text-neon-blue" />,
-    color: "#00D4FF",
-    short: "Type-safe JavaScript for scalable apps.",
-    details: [
-      "Type Safety",
-      "Interfaces & Types",
-      "Advanced Patterns"
-    ]
+    icon: <SiTypescript className="text-4xl text-primary" />,
+    color: "#F96902",
+    snippet: `type User = { name: string; }`,
+    preview: <div className="w-full h-16 bg-primary/10 rounded-lg flex items-center justify-center text-primary font-bold">TS Types</div>
   },
   {
     name: "Node.js",
-    icon: <FaNodeJs className="text-4xl text-neon-green" />,
-    color: "#00FF88",
-    short: "Server-side JavaScript and APIs.",
-    details: [
-      "Express.js Framework",
-      "API Development",
-      "Database Integration"
-    ]
+    icon: <FaNodeJs className="text-4xl text-primary" />,
+    color: "#F96902",
+    snippet: `app.get('/', (req, res) => res.send('OK'));`,
+    preview: <div className="w-full h-16 bg-primary/10 rounded-lg flex items-center justify-center text-primary font-bold">API Route</div>
   },
   {
     name: "HTML5",
-    icon: <FaHtml5 className="text-4xl text-neon-pink" />,
-    color: "#FF0080",
-    short: "Semantic, accessible markup.",
-    details: [
-      "Semantic HTML",
-      "Accessibility",
-      "SEO Best Practices"
-    ]
+    icon: <FaHtml5 className="text-4xl text-primary" />,
+    color: "#F96902",
+    snippet: `<main><h1>Hello</h1></main>`,
+    preview: <div className="w-full h-16 bg-primary/10 rounded-lg flex items-center justify-center text-primary font-bold">HTML5</div>
   },
   {
     name: "CSS3",
-    icon: <FaCss3Alt className="text-4xl text-neon-blue" />,
-    color: "#00D4FF",
-    short: "Modern layouts and animations.",
-    details: [
-      "Flexbox & Grid",
-      "Animations",
-      "Responsive Design"
-    ]
+    icon: <FaCss3Alt className="text-4xl text-primary" />,
+    color: "#F96902",
+    snippet: `.btn { background: #F96902; }`,
+    preview: <div className="w-full h-16 bg-primary/10 rounded-lg flex items-center justify-center text-primary font-bold">CSS3</div>
   },
   {
     name: "Git",
-    icon: <FaGitAlt className="text-4xl text-neon-orange" />,
-    color: "#FF9900",
-    short: "Version control and collaboration.",
-    details: [
-      "Branching & Merging",
-      "Collaboration",
-      "CI/CD Workflows"
-    ]
+    icon: <FaGitAlt className="text-4xl text-primary" />,
+    color: "#F96902",
+    snippet: `git commit -m 'feat: add feature'`,
+    preview: <div className="w-full h-16 bg-primary/10 rounded-lg flex items-center justify-center text-primary font-bold">Git</div>
   },
 ];
 
@@ -111,10 +75,10 @@ const Skills = () => {
   return (
     <section id="skills" className="relative w-full max-w-7xl mx-auto px-6 py-24 min-h-[60vh] flex flex-col items-center">
       <div className="text-center mb-16">
-        <h2 className="text-5xl font-futura font-bold neon-text-blue mb-2">Skills</h2>
-        <div className="w-16 h-1 mx-auto bg-gradient-to-r from-neon-blue to-neon-pink rounded-full mb-2" />
+        <h2 className="text-5xl font-display font-extrabold text-white mb-2">Skills</h2>
+        <div className="w-16 h-1 mx-auto bg-primary rounded-full mb-2" />
         <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-          My core technologies. Hover for a quick summary, click for details.
+          My core technologies. Click a card to see a code or UI preview.
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full">
@@ -123,12 +87,12 @@ const Skills = () => {
             key={skill.name}
             layout
             onClick={() => setExpanded(expanded === i ? null : i)}
-            whileHover={{ y: -6, boxShadow: `0 0 16px ${skill.color}` }}
-            className={`glass rounded-2xl border-2 cursor-pointer group transition-all duration-300 flex flex-col items-center p-6 relative ${expanded === i ? 'border-neon-pink shadow-neon-pink' : 'border-glass-border'}`}
+            whileHover={{ y: -8, boxShadow: `0 0 24px ${skill.color}` }}
+            className={`glass rounded-xl border-2 cursor-pointer group transition-all duration-300 flex flex-col items-center p-6 relative ${expanded === i ? 'border-primary shadow-orange' : 'border-glass-border'}`}
             style={{ minHeight: 180 }}
           >
             <div className="mb-3">{skill.icon}</div>
-            <div className="font-futura font-bold text-lg mb-1" style={{ color: skill.color }}>{skill.name}</div>
+            <div className="font-display font-bold text-lg mb-1 text-white">{skill.name}</div>
             <AnimatePresence initial={false}>
               {expanded === i ? (
                 <motion.div
@@ -137,26 +101,14 @@ const Skills = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
                   transition={{ duration: 0.3 }}
-                  className="mt-2 w-full"
+                  className="mt-4 w-full"
                 >
-                  <ul className="text-gray-300 text-sm list-disc list-inside space-y-1">
-                    {skill.details.map((d, idx) => (
-                      <li key={idx}>{d}</li>
-                    ))}
-                  </ul>
+                  <div className="mb-2">{skill.preview}</div>
+                  <pre className="bg-background text-primary text-xs rounded-lg p-3 overflow-x-auto font-mono border border-primary/20">
+                    {skill.snippet}
+                  </pre>
                 </motion.div>
-              ) : (
-                <motion.div
-                  key="short"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.2 }}
-                  className="text-gray-400 text-sm mt-2 text-center"
-                >
-                  {skill.short}
-                </motion.div>
-              )}
+              ) : null}
             </AnimatePresence>
           </motion.div>
         ))}
