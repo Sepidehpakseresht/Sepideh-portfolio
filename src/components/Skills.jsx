@@ -176,13 +176,13 @@ function FloatingIDE({ position }) {
               <div className="ml-3 text-gray-400">Portfolio.jsx</div>
             </div>
             <div className="text-blue-400">import React from 'react';</div>
-            <div className="text-purple-400">const Portfolio = () => {</div>
+            <div className="text-purple-400">const Portfolio = () =&gt; {'{'}</div>
             <div className="text-green-400 ml-2">return (</div>
-            <div className="text-red-400 ml-4">&lt;div className="magic"&gt;</div>
+            <div className="text-red-400 ml-4">&lt;div className=&quot;magic&quot;&gt;</div>
             <div className="text-yellow-400 ml-6">✨ Creating...</div>
             <div className="text-red-400 ml-4">&lt;/div&gt;</div>
             <div className="text-green-400 ml-2">);</div>
-            <div className="text-purple-400">};</div>
+            <div className="text-purple-400">{'};'}</div>
           </div>
         </Html>
       </group>

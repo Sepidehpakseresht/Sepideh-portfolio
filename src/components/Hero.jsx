@@ -112,17 +112,17 @@ function FloatingCodeEditor() {
             pointerEvents: 'none',
           }}
         >
-          <div className="w-full h-full bg-gray-900 p-2 font-mono text-xs rounded">
-            <div className="text-purple-400">const</div>
-            <div className="text-blue-400 ml-2">Portfolio</div>
-            <div className="text-white ml-2">= () => {</div>
-            <div className="text-green-400 ml-4">return (</div>
-            <div className="text-red-400 ml-6">&lt;div&gt;</div>
-            <div className="text-yellow-400 ml-8">Magic!</div>
-            <div className="text-red-400 ml-6">&lt;/div&gt;</div>
-            <div className="text-green-400 ml-4">);</div>
-            <div className="text-white ml-2">};</div>
-          </div>
+                                <div className="w-full h-full bg-gray-900 p-2 font-mono text-xs rounded">
+             <div className="text-purple-400">const</div>
+             <div className="text-blue-400 ml-2">Portfolio</div>
+             <div className="text-white ml-2">= () =&gt; {'{'}</div>
+             <div className="text-green-400 ml-4">return (</div>
+             <div className="text-red-400 ml-6">&lt;div&gt;</div>
+             <div className="text-yellow-400 ml-8">Magic!</div>
+             <div className="text-red-400 ml-6">&lt;/div&gt;</div>
+             <div className="text-green-400 ml-4">);</div>
+             <div className="text-white ml-2">{'};'}</div>
+           </div>
         </Html>
       </group>
     </Float>
