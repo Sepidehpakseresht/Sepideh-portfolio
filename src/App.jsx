@@ -6,18 +6,22 @@ import Works from './components/Works';
 import Experience from './components/Experienxe/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Background3D from './components/Background3D';
 
 function App() {
   return (
-    <div className="bg-gray-900 text-white">
-      <Header />
-      <Hero />
-      <AboutMe />
-      <Skills />
-      <Works />
-      <Experience />
-      <Contact />
-      <Footer/>
+    <div className="bg-space-black text-white min-h-screen relative overflow-x-hidden">
+      <Background3D />
+      <div className="relative z-10">
+        <Header />
+        <Hero />
+        <AboutMe />
+        <Skills />
+        <Works />
+        <Experience />
+        <Contact />
+        <Footer/>
+      </div>
     </div>
   );
 }

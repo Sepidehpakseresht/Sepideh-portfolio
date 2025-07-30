@@ -62,39 +62,192 @@ const About = () => {
 
   return (
     <section
-      ref={sectionRef}
       id="aboutme"
-      className="relative min-h-screen flex items-center justify-between gap-10 flex-col md:flex-row bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 px-6 py-24 text-white"
+      ref={sectionRef}
+      className="min-h-screen px-6 py-24 text-white relative overflow-hidden"
     >
-      <div className="max-w-2xl space-y-8 z-10">
-        <h2 className="text-4xl font-bold text-white glow-text text-center">About Me</h2>
-        <p className="text-white/80 leading-relaxed">
-          From answering customer calls to building user-friendly interfaces — my journey into tech has been anything but ordinary. I started working as a <span className="text-white font-semibold">Customer Support Specialist</span>, where I discovered the power of listening. Understanding people’s real problems and seeing how interface design shaped their experience sparked my early interest in UI/UX.
-        </p>
-        <p className="text-white/80 leading-relaxed">
-          Curious to go deeper, I moved into <span className="text-white font-semibold">Product Management</span>. There, I learned how to prioritize, communicate with developers and designers, and find the balance between user needs and technical realities. Working with large companies and high-impact clients gave me invaluable insights into how strong teams build great products.
-        </p>
-        <p className="text-white/80 leading-relaxed">
-          But something kept pulling me closer to the building process itself. Watching developers bring ideas to life made me realize: I don’t just want to manage the vision — I want to code it into reality. That’s when I began my path into <span className="text-white font-semibold">Front-End Development</span>, and I’ve never looked back.
-        </p>
-        <p className="text-cyan-200 italic font-medium">This is my story of growth — and it's just getting started.</p>
-      </div>
+      {/* Background elements */}
+      <div className="absolute inset-0 bg-gradient-to-b from-space-black via-space-deep to-space-medium" />
+      
+      {/* Animated background orbs */}
+      <div className="absolute top-32 left-20 w-80 h-80 bg-neon-green/10 rounded-full blur-[120px] animate-pulse" />
+      <div className="absolute bottom-20 right-20 w-96 h-96 bg-neon-cyan/10 rounded-full blur-[140px] animate-pulse" />
 
-      <div className="hidden md:block relative w-full md:w-[800px] h-[300px] md:h-[500px]">
-        <AnimatePresence mode="wait">
-          {getCurrentImage() && (
-            <Motion.img
-              key={treeStage}
-              src={getCurrentImage()}
-              alt={`Tree stage ${treeStage}`}
-              className={`${baseClass}`}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.6, ease: 'easeInOut' }}
-            />
+      <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center min-h-screen">
+        
+        {/* Left side - Content */}
+        <Motion.div
+          className="space-y-8"
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <div>
+            <Motion.h2
+              className="text-5xl md:text-6xl font-bold mb-6 font-futuristic"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <span className="holographic-text">About Me</span>
+            </Motion.h2>
+            
+            <Motion.p
+              className="text-xl text-neon-cyan font-mono glow-text mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              My journey of continuous growth
+            </Motion.p>
+          </div>
+
+          <Motion.div
+            className="glass-morphism rounded-2xl p-8 space-y-6"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-lg text-gray-300 leading-relaxed">
+              I'm a passionate <span className="text-neon-cyan font-semibold">front-end developer</span> who 
+              believes in the power of continuous learning and growth. Like a tree that starts as a small seed 
+              and grows into something magnificent, my journey in tech has been one of constant evolution.
+            </p>
+            
+            <p className="text-lg text-gray-300 leading-relaxed">
+              I specialize in creating <span className="text-neon-purple font-semibold">modern, responsive web applications</span> using 
+              React, Tailwind CSS, and cutting-edge technologies. Every project is an opportunity to push 
+              boundaries and create something extraordinary.
+            </p>
+            
+            <p className="text-lg text-gray-300 leading-relaxed">
+              My approach combines <span className="text-neon-green font-semibold">technical excellence</span> with 
+              creative problem-solving, always striving to deliver user experiences that are both beautiful 
+              and functional.
+            </p>
+          </Motion.div>
+
+          {/* Skills highlight */}
+          <Motion.div
+            className="grid grid-cols-2 md:grid-cols-3 gap-4"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8, staggerChildren: 0.1 }}
+            viewport={{ once: true }}
+          >
+            {[
+              { label: "Frontend", value: "Expert" },
+              { label: "UI/UX", value: "Advanced" },
+              { label: "3D Web", value: "Learning" },
+              { label: "React", value: "Expert" },
+              { label: "Animation", value: "Advanced" },
+              { label: "Innovation", value: "Always" }
+            ].map((skill, index) => (
+              <Motion.div
+                key={skill.label}
+                className="glass-morphism rounded-lg p-4 text-center hover:neon-glow-cyan transition-all duration-300"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.05, y: -5 }}
+              >
+                <div className="text-neon-cyan font-bold text-sm mb-1 font-mono">
+                  {skill.label}
+                </div>
+                <div className="text-white text-xs">
+                  {skill.value}
+                </div>
+              </Motion.div>
+            ))}
+          </Motion.div>
+        </Motion.div>
+
+        {/* Right side - Tree Animation */}
+        <Motion.div
+          className="relative h-[500px] lg:h-[600px]"
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
+          {/* Holographic frame */}
+          <div className="absolute inset-0 rounded-2xl border-2 border-neon-cyan/30 glass-morphism">
+            <div className="absolute inset-2 rounded-xl border border-neon-purple/20"></div>
+          </div>
+
+          {/* Tree growth visualization */}
+          <div className="relative h-full flex items-center justify-center">
+            <AnimatePresence>
+              {getCurrentImage() && (
+                <Motion.img
+                  key={treeStage}
+                  src={getCurrentImage()}
+                  alt={`Growth stage ${treeStage}`}
+                  className="max-w-full max-h-full object-contain filter drop-shadow-lg"
+                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  style={{
+                    filter: 'drop-shadow(0 0 20px rgba(0, 255, 136, 0.3))'
+                  }}
+                />
+              )}
+            </AnimatePresence>
+
+            {/* Growth stage indicator */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+              <div className="flex space-x-2">
+                {[1, 2, 3, 4].map((stage) => (
+                  <Motion.div
+                    key={stage}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      stage <= treeStage 
+                        ? 'bg-neon-green shadow-neon-green' 
+                        : 'bg-gray-600'
+                    }`}
+                    animate={stage <= treeStage ? { scale: [1, 1.2, 1] } : {}}
+                    transition={{ duration: 0.5, delay: stage * 0.1 }}
+                  />
+                ))}
+              </div>
+              <p className="text-neon-cyan text-xs font-mono text-center mt-2">
+                Growth Stage: {treeStage}/4
+              </p>
+            </div>
+          </div>
+
+          {/* Floating particles around tree */}
+          {treeStage > 0 && (
+            <div className="absolute inset-0 pointer-events-none">
+              {[...Array(6)].map((_, i) => (
+                <Motion.div
+                  key={i}
+                  className="absolute w-2 h-2 bg-neon-green rounded-full opacity-60"
+                  animate={{
+                    x: [0, Math.random() * 100 - 50],
+                    y: [0, Math.random() * 100 - 50],
+                    opacity: [0.6, 0, 0.6],
+                  }}
+                  transition={{
+                    duration: 3 + Math.random() * 2,
+                    repeat: Infinity,
+                    delay: Math.random() * 2,
+                  }}
+                  style={{
+                    left: `${20 + Math.random() * 60}%`,
+                    top: `${20 + Math.random() * 60}%`,
+                  }}
+                />
+              ))}
+            </div>
           )}
-        </AnimatePresence>
+        </Motion.div>
       </div>
     </section>
   );

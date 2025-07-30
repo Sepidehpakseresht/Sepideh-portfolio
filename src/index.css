@@ -2,18 +2,160 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
 
 html{
   scroll-behavior: smooth;
+  background: #000000;
 }
 
+body {
+  background: linear-gradient(135deg, #000000 0%, #0a0a0f 50%, #111118 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
+/* Holographic text effect */
+.holographic-text {
+  background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06ffa5, #ff006e);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: holographic 3s ease-in-out infinite;
+}
 
+/* Glass morphism effect */
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Neon glow effects */
+.neon-glow-cyan {
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.3), 0 0 60px rgba(0, 255, 255, 0.1);
+}
+
+.neon-glow-purple {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.5), 0 0 40px rgba(139, 92, 246, 0.3), 0 0 60px rgba(139, 92, 246, 0.1);
+}
+
+.neon-border {
+  border: 2px solid transparent;
+  background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06ffa5) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+/* Futuristic button */
+.futuristic-button {
+  position: relative;
+  background: linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(139, 92, 246, 0.1));
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.futuristic-button:hover {
+  background: linear-gradient(45deg, rgba(0, 255, 255, 0.2), rgba(139, 92, 246, 0.2));
+  border-color: rgba(0, 255, 255, 0.6);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.futuristic-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.futuristic-button:hover::before {
+  left: 100%;
+}
+
+/* Particle effect background */
+.particle-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Floating animation for 3D elements */
+@keyframes float-3d {
+  0%, 100% { 
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+  }
+  33% { 
+    transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+  }
+  66% { 
+    transform: translateY(-5px) rotateX(-5deg) rotateY(-5deg);
+  }
+}
+
+.float-3d {
+  animation: float-3d 6s ease-in-out infinite;
+}
+
+/* Holographic card effect */
+.holographic-card {
+  background: linear-gradient(45deg, 
+    rgba(255, 0, 110, 0.1) 0%,
+    rgba(131, 56, 236, 0.1) 25%,
+    rgba(58, 134, 255, 0.1) 50%,
+    rgba(6, 255, 165, 0.1) 75%,
+    rgba(255, 0, 110, 0.1) 100%
+  );
+  background-size: 400% 400%;
+  animation: holographic 4s ease-in-out infinite;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.holographic-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  transform: rotate(45deg);
+  transition: all 0.3s ease;
+  opacity: 0;
+}
+
+.holographic-card:hover::before {
+  opacity: 1;
+  animation: shimmer 1.5s ease-in-out;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+/* Existing animations */
 @keyframes scroll {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-
 
 @keyframes slide {
   0% {
@@ -27,8 +169,6 @@ html{
 .animate-slide {
   animation: slide 30s linear infinite;
 }
-
-
 
 .slider-container-loop {
   overflow: hidden;
@@ -48,37 +188,34 @@ html{
   height: 90px;
   object-fit: contain;
   transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.3));
 }
-
 
 .slider-track-loop img:hover {
   transform: scale(1.1);
+  filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.6));
 }
 
-
 .glow-text {
-  text-shadow: 0 0 8px #22d3ee, 0 0 16px #22d3ee;
+  text-shadow: 0 0 8px #00ffff, 0 0 16px #00ffff, 0 0 24px #00ffff;
 }
 
 .bg-glow {
-  background: radial-gradient(circle at 40% 20%, rgba(34, 211, 238, 0.07), transparent 60%);
+  background: radial-gradient(circle at 40% 20%, rgba(0, 255, 255, 0.1), transparent 60%);
 }
-
 
 .text-muted {
   color: rgba(255, 255, 255, 0.6);
 }
 
-
 .soft-fade {
-  background: radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.03), transparent 60%);
+  background: radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.05), transparent 60%);
 }
 
 .backdrop-blur-xl {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
-
 
 @keyframes slideAlt {
   0% {
@@ -87,6 +224,24 @@ html{
   100% {
     transform: translateX(-50%);
   }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111118;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #00ffff, #8b5cf6);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #00ffff, #ff00ff);
 }
 
 
