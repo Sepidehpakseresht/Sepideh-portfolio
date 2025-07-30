@@ -4,116 +4,185 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaArrowRight, FaDownload } from 'reac
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 
-function Avatar3D() {
+function BeautifulAvatar3D() {
   const group = useRef();
+  const hairGroup = useRef();
   
-  useFrame(() => {
+  useFrame((state) => {
     if (group.current) {
       // Smooth rotation
-      group.current.rotation.y += 0.005;
+      group.current.rotation.y += 0.003;
+    }
+    if (hairGroup.current) {
+      // Subtle hair movement
+      hairGroup.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
     }
   });
   
   return (
     <group ref={group}>
-      {/* Head shape */}
+      {/* Main head - more elegant shape */}
       <mesh position={[0, 0, 0]}>
-        <sphereGeometry args={[1.2, 32, 32]} />
+        <sphereGeometry args={[1.1, 32, 32]} />
         <meshPhysicalMaterial
-          color="#181C23"
-          roughness={0.3}
-          metalness={0.1}
-          clearcoat={0.5}
-          clearcoatRoughness={0.2}
-        />
-      </mesh>
-      
-      {/* Face details */}
-      <mesh position={[0, 0, 1.15]}>
-        <circleGeometry args={[0.8, 32]} />
-        <meshPhysicalMaterial
-          color="#F96902"
+          color="#2A2F38"
           roughness={0.2}
           metalness={0.3}
           clearcoat={0.8}
           clearcoatRoughness={0.1}
-          transparent
-          opacity={0.9}
+          transmission={0.1}
+          thickness={0.2}
         />
       </mesh>
       
-      {/* Initial "S" on face */}
-      <mesh position={[0, 0, 1.2]}>
-        <planeGeometry args={[0.6, 0.6]} />
-        <meshBasicMaterial
-          color="#fff"
-          transparent
-          opacity={0.95}
-        />
-      </mesh>
-      
-      {/* Hair/Head covering */}
-      <mesh position={[0, 0.3, 0.8]}>
-        <sphereGeometry args={[0.9, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2]} />
+      {/* Elegant face mask */}
+      <mesh position={[0, 0, 1.05]}>
+        <sphereGeometry args={[0.85, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2]} />
         <meshPhysicalMaterial
           color="#F96902"
-          roughness={0.4}
+          roughness={0.15}
+          metalness={0.4}
+          clearcoat={0.9}
+          clearcoatRoughness={0.05}
+          transmission={0.3}
+          thickness={0.3}
+          transparent
+          opacity={0.85}
+        />
+      </mesh>
+      
+      {/* Geometric "S" initial - more stylized */}
+      <group position={[0, 0, 1.15]}>
+        {/* Main S shape */}
+        <mesh>
+          <cylinderGeometry args={[0.15, 0.15, 0.8, 8]} />
+          <meshPhysicalMaterial
+            color="#fff"
+            roughness={0.1}
+            metalness={0.8}
+            clearcoat={0.9}
+            clearcoatRoughness={0.05}
+          />
+        </mesh>
+        {/* Curved parts of S */}
+        <mesh position={[0.1, 0.2, 0]} rotation={[0, 0, Math.PI / 3]}>
+          <cylinderGeometry args={[0.15, 0.15, 0.4, 8]} />
+          <meshPhysicalMaterial
+            color="#fff"
+            roughness={0.1}
+            metalness={0.8}
+            clearcoat={0.9}
+            clearcoatRoughness={0.05}
+          />
+        </mesh>
+        <mesh position={[-0.1, -0.2, 0]} rotation={[0, 0, -Math.PI / 3]}>
+          <cylinderGeometry args={[0.15, 0.15, 0.4, 8]} />
+          <meshPhysicalMaterial
+            color="#fff"
+            roughness={0.1}
+            metalness={0.8}
+            clearcoat={0.9}
+            clearcoatRoughness={0.05}
+          />
+        </mesh>
+      </group>
+      
+      {/* Flowing hair/headpiece */}
+      <group ref={hairGroup} position={[0, 0.2, 0.6]}>
+        {/* Main hair volume */}
+        <mesh>
+          <sphereGeometry args={[0.9, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2]} />
+          <meshPhysicalMaterial
+            color="#F96902"
+            roughness={0.3}
+            metalness={0.2}
+            clearcoat={0.7}
+            clearcoatRoughness={0.2}
+            transmission={0.2}
+            transparent
+            opacity={0.9}
+          />
+        </mesh>
+        
+        {/* Flowing strands */}
+        {[...Array(6)].map((_, i) => (
+          <mesh
+            key={i}
+            position={[
+              Math.cos(i * Math.PI / 3) * 0.3,
+              -0.3 + Math.sin(i * Math.PI / 3) * 0.1,
+              -0.2
+            ]}
+            rotation={[0, 0, i * Math.PI / 3]}
+          >
+            <cylinderGeometry args={[0.05, 0.02, 0.8, 8]} />
+            <meshPhysicalMaterial
+              color="#F96902"
+              roughness={0.4}
+              metalness={0.1}
+              clearcoat={0.6}
+              clearcoatRoughness={0.3}
+              transparent
+              opacity={0.7}
+            />
+          </mesh>
+        ))}
+      </group>
+      
+      {/* Elegant neck */}
+      <mesh position={[0, -1.3, 0]}>
+        <cylinderGeometry args={[0.35, 0.35, 0.8, 16]} />
+        <meshPhysicalMaterial
+          color="#2A2F38"
+          roughness={0.25}
           metalness={0.2}
           clearcoat={0.6}
           clearcoatRoughness={0.2}
-          transparent
-          opacity={0.8}
         />
       </mesh>
       
-      {/* Neck */}
-      <mesh position={[0, -1.5, 0]}>
-        <cylinderGeometry args={[0.4, 0.4, 0.6, 16]} />
-        <meshPhysicalMaterial
-          color="#181C23"
-          roughness={0.3}
-          metalness={0.1}
-        />
-      </mesh>
-      
-      {/* Shoulders */}
+      {/* Shoulder piece */}
       <mesh position={[0, -1.8, 0]}>
-        <boxGeometry args={[2.5, 0.3, 0.8]} />
+        <boxGeometry args={[2.2, 0.25, 0.7]} />
         <meshPhysicalMaterial
           color="#F96902"
-          roughness={0.3}
-          metalness={0.2}
-          clearcoat={0.5}
+          roughness={0.25}
+          metalness={0.3}
+          clearcoat={0.7}
           clearcoatRoughness={0.2}
           transparent
           opacity={0.9}
         />
       </mesh>
       
-      {/* Subtle shadow under avatar */}
-      <mesh position={[0, -2.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[1.5, 32]} />
-        <meshBasicMaterial color="#000" transparent opacity={0.2} />
-      </mesh>
-      
-      {/* Floating particles around avatar */}
-      {[...Array(8)].map((_, i) => (
+      {/* Floating geometric elements */}
+      {[...Array(12)].map((_, i) => (
         <mesh
           key={i}
           position={[
-            Math.cos(i * Math.PI / 4) * 2,
-            Math.sin(i * Math.PI / 4) * 0.5,
-            Math.sin(i * Math.PI / 4) * 2
+            Math.cos(i * Math.PI / 6) * 2.5,
+            Math.sin(i * Math.PI / 6) * 0.8,
+            Math.sin(i * Math.PI / 6) * 1.5
           ]}
         >
-          <sphereGeometry args={[0.05, 8, 8]} />
-          <meshBasicMaterial
+          <octahedronGeometry args={[0.08]} />
+          <meshPhysicalMaterial
             color="#F96902"
+            roughness={0.2}
+            metalness={0.6}
+            clearcoat={0.8}
+            clearcoatRoughness={0.1}
             transparent
-            opacity={0.6}
+            opacity={0.8}
           />
         </mesh>
       ))}
+      
+      {/* Subtle shadow */}
+      <mesh position={[0, -2.3, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[1.8, 32]} />
+        <meshBasicMaterial color="#000" transparent opacity={0.15} />
+      </mesh>
     </group>
   );
 }
@@ -191,21 +260,22 @@ const Hero = () => {
           ))}
         </div>
       </div>
-      {/* Right: Interactive 3D Avatar */}
+      {/* Right: Beautiful 3D Avatar */}
       <div className="flex-1 flex items-center justify-center w-full h-72 lg:h-96">
         <Canvas camera={{ position: [0, 0, 5], fov: 60 }} style={{ width: '100%', height: '100%' }} shadows>
-          <ambientLight intensity={0.4} />
-          <directionalLight position={[2, 4, 2]} intensity={0.7} color="#F96902" castShadow />
-          <pointLight position={[-2, 2, 2]} intensity={0.3} color="#F96902" />
-          <Avatar3D />
+          <ambientLight intensity={0.3} />
+          <directionalLight position={[2, 4, 2]} intensity={0.8} color="#F96902" castShadow />
+          <pointLight position={[-2, 2, 2]} intensity={0.4} color="#F96902" />
+          <pointLight position={[0, -2, 2]} intensity={0.3} color="#F96902" />
+          <BeautifulAvatar3D />
           <OrbitControls 
             enableZoom={false} 
             enablePan={false} 
             autoRotate 
-            autoRotateSpeed={0.5}
+            autoRotateSpeed={0.3}
             enableDamping
             dampingFactor={0.05}
-            rotateSpeed={0.3}
+            rotateSpeed={0.2}
           />
         </Canvas>
       </div>
