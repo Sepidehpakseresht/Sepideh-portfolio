@@ -4,31 +4,64 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaArrowRight } from 'react-icons/fa';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 
-function RotatingTorus() {
-  const mesh = useRef();
-  useFrame((state) => {
-    if (mesh.current) {
-      mesh.current.rotation.x += 0.005;
-      mesh.current.rotation.y += 0.007;
+function BrowserWindow3D() {
+  const group = useRef();
+  useFrame(() => {
+    if (group.current) {
+      group.current.rotation.x += 0.003;
+      group.current.rotation.y += 0.004;
     }
   });
   return (
-    <mesh ref={mesh} castShadow receiveShadow>
-      <torusGeometry args={[1, 0.32, 32, 96]} />
-      <meshPhysicalMaterial
-        color="#F96902"
-        roughness={0.15}
-        metalness={0.7}
-        clearcoat={0.7}
-        clearcoatRoughness={0.1}
-        transmission={0.7}
-        thickness={0.5}
-        ior={1.3}
-        reflectivity={0.5}
-        transparent
-        opacity={0.95}
-      />
-    </mesh>
+    <group ref={group}>
+      {/* Main window body */}
+      <mesh castShadow receiveShadow position={[0, 0, 0]}>
+        <boxGeometry args={[2.2, 1.4, 0.12]} />
+        <meshPhysicalMaterial
+          color="#181C23"
+          roughness={0.18}
+          metalness={0.4}
+          clearcoat={0.7}
+          clearcoatRoughness={0.1}
+          transmission={0.7}
+          thickness={0.4}
+          ior={1.2}
+          reflectivity={0.3}
+          transparent
+          opacity={0.92}
+        />
+      </mesh>
+      {/* Orange accent bar */}
+      <mesh position={[0, 0.7, 0.07]}>
+        <boxGeometry args={[2.2, 0.18, 0.13]} />
+        <meshPhysicalMaterial
+          color="#F96902"
+          roughness={0.1}
+          metalness={0.7}
+          clearcoat={0.8}
+          transmission={0.5}
+          opacity={0.98}
+        />
+      </mesh>
+      {/* Window buttons (left) */}
+      <mesh position={[-0.95, 0.7, 0.14]}>
+        <sphereGeometry args={[0.04, 16, 16]} />
+        <meshStandardMaterial color="#fff" />
+      </mesh>
+      <mesh position={[-0.85, 0.7, 0.14]}>
+        <sphereGeometry args={[0.04, 16, 16]} />
+        <meshStandardMaterial color="#fff" />
+      </mesh>
+      <mesh position={[-0.75, 0.7, 0.14]}>
+        <sphereGeometry args={[0.04, 16, 16]} />
+        <meshStandardMaterial color="#fff" />
+      </mesh>
+      {/* Subtle shadow under window */}
+      <mesh position={[0, -0.8, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[1.1, 32]} />
+        <meshBasicMaterial color="#000" transparent opacity={0.18} />
+      </mesh>
+    </group>
   );
 }
 
@@ -93,12 +126,12 @@ const Hero = () => {
           ))}
         </div>
       </div>
-      {/* Right: Interactive 3D Torus */}
+      {/* Right: Interactive 3D Browser Window */}
       <div className="flex-1 flex items-center justify-center w-full h-72 lg:h-96">
         <Canvas camera={{ position: [0, 0, 3.5], fov: 60 }} style={{ width: '100%', height: '100%' }} shadows>
           <ambientLight intensity={0.4} />
           <directionalLight position={[2, 4, 2]} intensity={0.7} color="#F96902" castShadow />
-          <RotatingTorus />
+          <BrowserWindow3D />
           <OrbitControls enableZoom={false} enablePan={false} />
         </Canvas>
       </div>
