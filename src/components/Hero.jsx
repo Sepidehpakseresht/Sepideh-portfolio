@@ -4,190 +4,123 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaArrowRight, FaDownload } from 'reac
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 
-function CodeBrackets3D() {
+function Natural3DElement() {
   const group = useRef();
-  const leftBracket = useRef();
-  const rightBracket = useRef();
+  const innerGroup = useRef();
   
   useFrame((state) => {
     if (group.current) {
-      // Smooth rotation
-      group.current.rotation.y += 0.004;
+      // Smooth, natural rotation
+      group.current.rotation.y += 0.002;
+      group.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.1;
     }
-    if (leftBracket.current && rightBracket.current) {
-      // Subtle individual bracket movements
-      leftBracket.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.8) * 0.1;
-      rightBracket.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.8 + Math.PI) * 0.1;
+    if (innerGroup.current) {
+      // Subtle inner movement
+      innerGroup.current.rotation.z += 0.003;
+      innerGroup.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
     }
   });
   
   return (
     <group ref={group}>
-      {/* Left Bracket < */}
-      <group ref={leftBracket} position={[-1.2, 0, 0]}>
-        {/* Vertical part */}
-        <mesh position={[-0.1, 0, 0]}>
-          <boxGeometry args={[0.2, 2, 0.2]} />
-          <meshPhysicalMaterial
-            color="#F96902"
-            roughness={0.1}
-            metalness={0.8}
-            clearcoat={0.9}
-            clearcoatRoughness={0.05}
-            emissive="#F96902"
-            emissiveIntensity={0.2}
-          />
-        </mesh>
-        
-        {/* Top diagonal */}
-        <mesh position={[0.1, 0.6, 0]} rotation={[0, 0, Math.PI / 4]}>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshPhysicalMaterial
-            color="#F96902"
-            roughness={0.1}
-            metalness={0.8}
-            clearcoat={0.9}
-            clearcoatRoughness={0.05}
-            emissive="#F96902"
-            emissiveIntensity={0.2}
-          />
-        </mesh>
-        
-        {/* Bottom diagonal */}
-        <mesh position={[0.1, -0.6, 0]} rotation={[0, 0, -Math.PI / 4]}>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshPhysicalMaterial
-            color="#F96902"
-            roughness={0.1}
-            metalness={0.8}
-            clearcoat={0.9}
-            clearcoatRoughness={0.05}
-            emissive="#F96902"
-            emissiveIntensity={0.2}
-          />
-        </mesh>
-      </group>
-      
-      {/* Right Bracket /> */}
-      <group ref={rightBracket} position={[1.2, 0, 0]}>
-        {/* Vertical part */}
-        <mesh position={[0.1, 0, 0]}>
-          <boxGeometry args={[0.2, 2, 0.2]} />
-          <meshPhysicalMaterial
-            color="#F96902"
-            roughness={0.1}
-            metalness={0.8}
-            clearcoat={0.9}
-            clearcoatRoughness={0.05}
-            emissive="#F96902"
-            emissiveIntensity={0.2}
-          />
-        </mesh>
-        
-        {/* Top diagonal */}
-        <mesh position={[-0.1, 0.6, 0]} rotation={[0, 0, -Math.PI / 4]}>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshPhysicalMaterial
-            color="#F96902"
-            roughness={0.1}
-            metalness={0.8}
-            clearcoat={0.9}
-            clearcoatRoughness={0.05}
-            emissive="#F96902"
-            emissiveIntensity={0.2}
-          />
-        </mesh>
-        
-        {/* Bottom diagonal */}
-        <mesh position={[-0.1, -0.6, 0]} rotation={[0, 0, Math.PI / 4]}>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshPhysicalMaterial
-            color="#F96902"
-            roughness={0.1}
-            metalness={0.8}
-            clearcoat={0.9}
-            clearcoatRoughness={0.05}
-            emissive="#F96902"
-            emissiveIntensity={0.2}
-          />
-        </mesh>
-      </group>
-      
-      {/* Center Slash / */}
-      <mesh position={[0, 0, 0]} rotation={[0, 0, Math.PI / 6]}>
-        <boxGeometry args={[0.15, 1.8, 0.15]} />
+      {/* Main outer ring - organic shape */}
+      <mesh>
+        <torusGeometry args={[1.5, 0.3, 16, 32]} />
         <meshPhysicalMaterial
-          color="#fff"
-          roughness={0.1}
-          metalness={0.9}
-          clearcoat={0.9}
-          clearcoatRoughness={0.05}
-          emissive="#fff"
-          emissiveIntensity={0.3}
+          color="#F96902"
+          roughness={0.4}
+          metalness={0.6}
+          clearcoat={0.8}
+          clearcoatRoughness={0.2}
+          transmission={0.3}
+          thickness={0.5}
+          transparent
+          opacity={0.9}
         />
       </mesh>
       
-      {/* Floating Code Particles */}
-      {[...Array(16)].map((_, i) => (
+      {/* Inner floating elements */}
+      <group ref={innerGroup}>
+        {/* Central sphere */}
+        <mesh position={[0, 0, 0]}>
+          <sphereGeometry args={[0.4, 32, 32]} />
+          <meshPhysicalMaterial
+            color="#fff"
+            roughness={0.2}
+            metalness={0.8}
+            clearcoat={0.9}
+            clearcoatRoughness={0.1}
+            transmission={0.4}
+            thickness={0.3}
+            transparent
+            opacity={0.95}
+          />
+        </mesh>
+        
+        {/* Orbiting spheres */}
+        {[...Array(6)].map((_, i) => (
+          <mesh
+            key={i}
+            position={[
+              Math.cos(i * Math.PI / 3) * 0.8,
+              Math.sin(i * Math.PI / 3) * 0.8,
+              0
+            ]}
+          >
+            <sphereGeometry args={[0.15, 16, 16]} />
+            <meshPhysicalMaterial
+              color="#F96902"
+              roughness={0.3}
+              metalness={0.7}
+              clearcoat={0.8}
+              clearcoatRoughness={0.15}
+              transmission={0.2}
+              thickness={0.2}
+              transparent
+              opacity={0.9}
+            />
+          </mesh>
+        ))}
+      </group>
+      
+      {/* Floating particles - more natural distribution */}
+      {[...Array(20)].map((_, i) => (
         <mesh
           key={i}
           position={[
-            Math.cos(i * Math.PI / 8) * 3.5,
-            Math.sin(i * Math.PI / 8) * 1.5,
-            Math.sin(i * Math.PI / 8) * 1.5
+            Math.cos(i * Math.PI / 10) * (2 + Math.sin(i * 0.5) * 0.5),
+            Math.sin(i * Math.PI / 10) * (1.5 + Math.cos(i * 0.3) * 0.3),
+            Math.sin(i * Math.PI / 10) * (1 + Math.cos(i * 0.7) * 0.5)
           ]}
         >
-          <sphereGeometry args={[0.08, 8, 8]} />
+          <sphereGeometry args={[0.03 + Math.sin(i) * 0.02, 8, 8]} />
           <meshPhysicalMaterial
             color="#F96902"
             roughness={0.2}
             metalness={0.6}
             clearcoat={0.8}
             clearcoatRoughness={0.1}
-            emissive="#F96902"
-            emissiveIntensity={0.4}
+            transmission={0.3}
             transparent
-            opacity={0.9}
+            opacity={0.7 + Math.sin(i * 0.5) * 0.2}
           />
         </mesh>
       ))}
       
-      {/* Glowing Core */}
+      {/* Subtle glow effect */}
       <mesh position={[0, 0, 0]}>
-        <sphereGeometry args={[0.3, 16, 16]} />
-        <meshPhysicalMaterial
+        <sphereGeometry args={[2.2, 16, 16]} />
+        <meshBasicMaterial
           color="#F96902"
-          roughness={0.1}
-          metalness={0.9}
-          clearcoat={0.9}
-          clearcoatRoughness={0.05}
-          emissive="#F96902"
-          emissiveIntensity={0.6}
           transparent
-          opacity={0.8}
+          opacity={0.05}
         />
       </mesh>
       
-      {/* Energy Rings */}
-      {[...Array(3)].map((_, i) => (
-        <mesh
-          key={i}
-          position={[0, 0, 0]}
-          rotation={[Math.PI / 2, 0, 0]}
-        >
-          <ringGeometry args={[0.8 + i * 0.4, 0.9 + i * 0.4, 32]} />
-          <meshBasicMaterial
-            color="#F96902"
-            transparent
-            opacity={0.3 - i * 0.1}
-          />
-        </mesh>
-      ))}
-      
-      {/* Subtle shadow */}
-      <mesh position={[0, -1.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+      {/* Natural shadow */}
+      <mesh position={[0, -2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[2.5, 32]} />
-        <meshBasicMaterial color="#F96902" transparent opacity={0.1} />
+        <meshBasicMaterial color="#000" transparent opacity={0.15} />
       </mesh>
     </group>
   );
@@ -266,23 +199,23 @@ const Hero = () => {
           ))}
         </div>
       </div>
-      {/* Right: 3D Code Brackets */}
+      {/* Right: Natural 3D Element */}
       <div className="flex-1 flex items-center justify-center w-full h-72 lg:h-96">
-        <Canvas camera={{ position: [0, 0, 5], fov: 60 }} style={{ width: '100%', height: '100%' }} shadows>
-          <ambientLight intensity={0.6} />
-          <directionalLight position={[2, 4, 2]} intensity={1.2} color="#F96902" castShadow />
-          <pointLight position={[-2, 2, 2]} intensity={0.8} color="#F96902" />
-          <pointLight position={[0, -2, 2]} intensity={0.6} color="#F96902" />
-          <pointLight position={[0, 0, 3]} intensity={0.4} color="#fff" />
-          <CodeBrackets3D />
+        <Canvas camera={{ position: [0, 0, 4], fov: 60 }} style={{ width: '100%', height: '100%' }} shadows>
+          <ambientLight intensity={0.4} />
+          <directionalLight position={[2, 4, 2]} intensity={0.8} color="#F96902" castShadow />
+          <pointLight position={[-2, 2, 2]} intensity={0.5} color="#F96902" />
+          <pointLight position={[0, -2, 2]} intensity={0.4} color="#F96902" />
+          <pointLight position={[0, 0, 3]} intensity={0.3} color="#fff" />
+          <Natural3DElement />
           <OrbitControls 
             enableZoom={false} 
             enablePan={false} 
             autoRotate 
-            autoRotateSpeed={0.4}
+            autoRotateSpeed={0.3}
             enableDamping
             dampingFactor={0.05}
-            rotateSpeed={0.3}
+            rotateSpeed={0.2}
           />
         </Canvas>
       </div>
