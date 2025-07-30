@@ -1,22 +1,98 @@
-import React from 'react';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import FullScreenMenu from '../FullScreenMenu';
-import './Header.css'; 
 
 export default function Header() {
-  return (
-    <header>
-      <div className="md:hidden">
-        <FullScreenMenu />
-      </div>
+  const [scrolled, setScrolled] = useState(false);
 
-      <nav className="hidden md:flex absolute right-4 top-1/2 transform -translate-y-1/2 flex-col gap-10 pr-2 text-white text-xs tracking-widest uppercase z-50">
-        <a href="#aboutme" className="rotate-180 origin-center [writing-mode:vertical-rl] hover:text-cyan-400 transition">About Me</a>
-        <a href="#skills" className="rotate-180 origin-center [writing-mode:vertical-rl] hover:text-cyan-400 transition">Skills</a>
-        <a href="#works" className="rotate-180 origin-center [writing-mode:vertical-rl] hover:text-cyan-400 transition">Works</a>
-        <a href="#experience" className="rotate-180 origin-center [writing-mode:vertical-rl] hover:text-cyan-400 transition">Experiences</a>
-        <a href="#contact" className="rotate-180 origin-center [writing-mode:vertical-rl] hover:text-cyan-400 transition">Contact</a>
-      </nav>
-    </header>
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <motion.header
+      initial={{ opacity: 0, y: -100 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? 'glass backdrop-blur-xl' : 'bg-transparent'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="flex items-center gap-3"
+          >
+            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-neon-blue to-neon-pink flex items-center justify-center">
+              <span className="text-white font-futura font-bold text-lg">S</span>
+            </div>
+            <span className="text-xl font-futura font-bold text-white neon-text-blue">
+              Sepideh
+            </span>
+          </motion.div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-8">
+            {[
+              { href: '#about', label: 'About' },
+              { href: '#skills', label: 'Skills' },
+              { href: '#works', label: 'Works' },
+              { href: '#experience', label: 'Experience' },
+              { href: '#contact', label: 'Contact' }
+            ].map((item, index) => (
+              <motion.a
+                key={item.label}
+                href={item.href}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -2 }}
+                className="text-gray-300 hover:text-white transition-colors duration-300 font-medium relative group"
+              >
+                {item.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-neon-blue to-neon-pink transition-all duration-300 group-hover:w-full"></span>
+              </motion.a>
+            ))}
+          </nav>
+
+          {/* Social Links */}
+          <div className="hidden md:flex items-center gap-4">
+            {[
+              { icon: FaGithub, href: "https://github.com/Sepidehpakseresht", label: "GitHub" },
+              { icon: FaLinkedin, href: "https://www.linkedin.com/in/sepideh-pakseresht-1b3967239", label: "LinkedIn" },
+              { icon: FaEnvelope, href: "mailto:sepiidehpakseresht@gmail.com", label: "Email" }
+            ].map((social, index) => (
+              <motion.a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+                whileHover={{ scale: 1.2, y: -2 }}
+                whileTap={{ scale: 0.9 }}
+                className="w-10 h-10 rounded-full glass flex items-center justify-center text-neon-blue hover:text-white hover:shadow-neon-blue transition-all duration-300"
+              >
+                <social.icon className="text-lg" />
+              </motion.a>
+            ))}
+          </div>
+
+          {/* Mobile Menu */}
+          <div className="lg:hidden">
+            <FullScreenMenu />
+          </div>
+        </div>
+      </div>
+    </motion.header>
   );
 }

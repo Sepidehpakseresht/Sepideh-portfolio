@@ -6,17 +6,21 @@ import Works from './components/Works';
 import Experience from './components/Experienxe/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Navigation from './components/Navigation';
 
 function App() {
   return (
-    <div className="bg-gray-900 text-white">
+    <div className="bg-gradient-futuristic text-white min-h-screen">
       <Header />
-      <Hero />
-      <AboutMe />
-      <Skills />
-      <Works />
-      <Experience />
-      <Contact />
+      <Navigation />
+      <main>
+        <Hero />
+        <AboutMe />
+        <Skills />
+        <Works />
+        <Experience />
+        <Contact />
+      </main>
       <Footer/>
     </div>
   );
