@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { motion as Motion } from "framer-motion";
-import Modal from "./Modal"; 
+import Modal from "./Modal";
+import RotatingSkillCircle from "./RotatingSkillCircle";
+import { sectionCircleData } from "../data/sectionData"; 
 const projects = [
   {
     title: "Techimmigrants Landing Page",
@@ -27,23 +29,37 @@ const projects = [
 
 export default function Works() {
   const [selected, setSelected] = useState(null);
+  const worksData = sectionCircleData.works;
 
   return (
     <section
       id="works"
-      className="min-h-screen px-6 py-24 text-white bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950"
+      className="relative min-h-screen px-6 py-24 text-white bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto text-center">
+      {/* Rotating Skills Circle for Works section */}
+      <div className="hidden lg:block">
+        <RotatingSkillCircle
+          skills={worksData.skills}
+          title={worksData.title}
+          size="medium"
+          position="left"
+          autoRotate={true}
+          rotationSpeed={25}
+        />
+      </div>
+      
+      <div className="max-w-6xl mx-auto text-center relative z-10">
         <h2 className="text-4xl font-bold glow-text mb-12">My Works</h2>
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 justify-center">
           {projects.map((project, index) => (
           <Motion.div
             key={index}
-            className={`cursor-pointer group relative overflow-hidden rounded-lg border border-cyan-600 shadow-lg 
+            className={`cursor-pointer group relative overflow-hidden rounded-lg border border-cyan-600 shadow-lg hover-lift modern-card
               ${index === 2 ? 'sm:col-span-2 sm:mx-auto sm:w-[80%] lg:col-span-1 lg:w-auto' : ''}
             `}
             onClick={() => setSelected(project)}
-            whileHover={{ scale: 1.03 }}
+            whileHover={{ scale: 1.03, rotateY: 5 }}
+            whileTap={{ scale: 0.98 }}
             transition={{ duration: 0.3 }}
           >
             <img

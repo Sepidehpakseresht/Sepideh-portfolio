@@ -1,8 +1,12 @@
 import { motion as Motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import RotatingSkillCircle from './RotatingSkillCircle';
+import { sectionCircleData } from '../data/sectionData';
 
 const Hero = () => {
+  const heroData = sectionCircleData.hero;
+
   return (
     <section className="relative min-h-screen flex items-center justify-center text-center px-6 overflow-hidden bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950">
       <div className="absolute inset-0 flex justify-center items-center z-0">
@@ -14,9 +18,21 @@ const Hero = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 1.5 }}
       />
+      
+      {/* Rotating Skills Circle */}
+      <div className="hidden lg:block">
+        <RotatingSkillCircle
+          skills={heroData.skills}
+          title={heroData.title}
+          size="medium"
+          position="right"
+          autoRotate={true}
+          rotationSpeed={40}
+        />
+      </div>
       <div className="relative z-10">
         <Motion.h1
-          className="text-white text-5xl sm:text-5xl md:text-6xl xl:text-6xl font-bold mb-4"
+          className="text-white text-5xl sm:text-5xl md:text-6xl xl:text-6xl font-bold mb-4 gradient-text"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}

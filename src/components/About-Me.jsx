@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
+import RotatingSkillCircle from './RotatingSkillCircle';
+import { sectionCircleData } from '../data/sectionData';
 
 import leaves1 from '../assets/leaves-1.png';
 import leaves2 from '../assets/leaves-2.png';
@@ -9,6 +11,7 @@ import leaves4 from '../assets/leaves-4.png';
 const About = () => {
   const [treeStage, setTreeStage] = useState(0);
   const sectionRef = useRef(null);
+  const aboutData = sectionCircleData.about;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -95,6 +98,18 @@ const About = () => {
             />
           )}
         </AnimatePresence>
+        
+        {/* Rotating Skills Circle for About section */}
+        <div className="hidden lg:block">
+          <RotatingSkillCircle
+            skills={aboutData.skills}
+            title={aboutData.title}
+            size="small"
+            position="right"
+            autoRotate={true}
+            rotationSpeed={35}
+          />
+        </div>
       </div>
     </section>
   );

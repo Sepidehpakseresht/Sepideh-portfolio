@@ -1,4 +1,6 @@
 import React from 'react';
+import RotatingSkillCircle from '../RotatingSkillCircle';
+import { sectionCircleData } from '../../data/sectionData';
 
 const courses = [
   {
@@ -19,18 +21,32 @@ const courses = [
 ];
 
 const CoursesExperience = () => {
+  const experienceData = sectionCircleData.experience;
+
   return (
     <section
       id="experience"
-      className="py-24 px-6 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white"
+      className="relative py-24 px-6 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white overflow-hidden"
     >
-      <div className="max-w-4xl mx-auto text-center ">
+      {/* Rotating Skills Circle for Experience section */}
+      <div className="hidden lg:block">
+        <RotatingSkillCircle
+          skills={experienceData.skills}
+          title={experienceData.title}
+          size="medium"
+          position="right"
+          autoRotate={true}
+          rotationSpeed={30}
+        />
+      </div>
+      
+      <div className="max-w-4xl mx-auto text-center relative z-10">
         <h2 className="text-4xl font-bold text-white mb-10 glow-text">Experiences 📚</h2>
         <div className="space-y-12 text-left ">
           {courses.map((course, index) => (
             <div
               key={index}
-              className="bg-gray-800 border border-cyan-500 rounded-lg p-6 shadow-lg cursor-pointer hover:shadow-cyan-600 transition duration-300"
+              className="bg-gray-800 border border-cyan-500 rounded-lg p-6 shadow-lg cursor-pointer hover:shadow-cyan-600 transition duration-300 hover-lift modern-card glow-border"
             >
               <h3 className="text-xl font-semibold text-cyan-300 mb-2">{course.title}</h3>
               <p className="text-gray-300 leading-relaxed text-sm">{course.description}</p>
