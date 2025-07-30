@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { motion as Motion } from "framer-motion";
-import Modal from "./Modal"; 
+import { motion } from "framer-motion";
+import Modal from "./Modal";
+
 const projects = [
   {
     title: "Techimmigrants Landing Page",
@@ -19,7 +20,7 @@ const projects = [
   {
     title: "Sepi Portfolio",
     image: "/portfolio.png",
-    live: "#", 
+    live: "#",
     description:
       "My personal portfolio built with React, Tailwind CSS, and Framer Motion. Represents my growth as a front-end developer with a tree metaphor.",
   },
@@ -31,37 +32,48 @@ export default function Works() {
   return (
     <section
       id="works"
-      className="min-h-screen px-6 py-24 text-white bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950"
+      className="relative w-full max-w-7xl mx-auto px-6 py-24 min-h-[80vh] flex items-center justify-center"
     >
-      <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl font-bold glow-text mb-12">My Works</h2>
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 justify-center">
+      <div className="w-full">
+        <div className="text-center mb-16">
+          <h2 className="text-5xl font-futura font-bold neon-text-blue mb-4">My Works</h2>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            A selection of my recent projects, each crafted with a focus on interactivity, performance, and futuristic design.
+          </p>
+        </div>
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
-          <Motion.div
-            key={index}
-            className={`cursor-pointer group relative overflow-hidden rounded-lg border border-cyan-600 shadow-lg 
-              ${index === 2 ? 'sm:col-span-2 sm:mx-auto sm:w-[80%] lg:col-span-1 lg:w-auto' : ''}
-            `}
-            onClick={() => setSelected(project)}
-            whileHover={{ scale: 1.03 }}
-            transition={{ duration: 0.3 }}
-          >
-            <img
-              src={project.image}
-              alt={project.title}
-              className="w-full h-52 object-cover opacity-90 group-hover:opacity-100 transition"
-            />
-            <div className="p-4 text-left">
-              <h3 className="text-lg font-semibold text-cyan-400">{project.title}</h3>
-              <p className="text-sm text-white/70 mt-1 line-clamp-2">
-                {project.description}
-              </p>
-            </div>
-          </Motion.div>
-        ))}
+            <motion.div
+              key={index}
+              className="glass rounded-2xl border border-glass-border shadow-neon-blue/30 backdrop-blur-xl cursor-pointer group relative overflow-hidden flex flex-col h-full transition-all duration-300"
+              onClick={() => setSelected(project)}
+              whileHover={{ scale: 1.04, boxShadow: "0 0 32px #00D4FF, 0 0 64px #FF0080" }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="relative w-full h-52 overflow-hidden rounded-t-2xl">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+              </div>
+              <div className="p-6 flex-1 flex flex-col justify-between">
+                <h3 className="text-lg font-futura font-bold neon-text-blue mb-2">{project.title}</h3>
+                <p className="text-sm text-gray-300 mb-4 line-clamp-3">{project.description}</p>
+                <div className="flex items-center gap-2 mt-auto">
+                  {project.live !== "#" && (
+                    <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-neon-blue/10 text-neon-blue border border-neon-blue/30">
+                      Live
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="absolute inset-0 pointer-events-none group-hover:shadow-neon-blue group-hover:shadow-lg transition-all duration-300" />
+            </motion.div>
+          ))}
         </div>
       </div>
-
       <Modal isOpen={selected !== null} onClose={() => setSelected(null)}>
         {selected && (
           <div className="space-y-4">
@@ -70,14 +82,14 @@ export default function Works() {
               alt={selected.title}
               className="w-full h-60 object-cover rounded-md"
             />
-            <h3 className="text-xl text-cyan-400 font-bold">{selected.title}</h3>
-            <p className="text-white/80 text-sm">{selected.description}</p>
+            <h3 className="text-xl neon-text-blue font-bold">{selected.title}</h3>
+            <p className="text-gray-300 text-sm">{selected.description}</p>
             {selected.live !== "#" && (
               <a
                 href={selected.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-medium px-4 py-2 rounded mt-4 transition"
+                className="inline-block bg-gradient-to-r from-neon-blue to-neon-pink text-white text-sm font-medium px-4 py-2 rounded-full mt-4 shadow-neon-blue hover:shadow-neon-pink transition"
               >
                 🔗 View Live
               </a>

@@ -1,20 +1,24 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const courses = [
   {
     title: 'UI/UX Design — Rahnama College',
     description:
-      'This course taught me the foundations of user interface and experience design. I learned about design thinking, wireframing, prototyping, and usability testing, while working on real product design cases. It deepened my understanding of how users interact with interfaces.',
+      'Foundations of user interface and experience design: design thinking, wireframing, prototyping, and usability testing. Real product design cases and user research.',
+    color: '#00D4FF',
   },
   {
     title: 'Product Management — Reforge',
     description:
-      'In this course, I explored the full product lifecycle, prioritization strategies, stakeholder communication, and roadmap planning. It gave me hands-on insight into how to balance business goals with user needs in cross-functional tech teams.',
+      'Product lifecycle, prioritization, stakeholder communication, and roadmap planning. Hands-on insight into balancing business goals with user needs in tech teams.',
+    color: '#FF0080',
   },
   {
     title: 'Front-End Bootcamp — Coding Front',
     description:
-      'This intensive bootcamp focused on HTML, CSS, JavaScript, SCSS, Bootstrap, Tailwind, Git, and React. I completed real projects including a portfolio and responsive landing pages, while improving my code structure, problem-solving, and UI/UX thinking as a junior developer.',
+      'Intensive bootcamp: HTML, CSS, JavaScript, SCSS, Bootstrap, Tailwind, Git, React. Real projects, portfolio, and responsive landing pages. Improved code structure and UI/UX thinking.',
+    color: '#7B2CBF',
   },
 ];
 
@@ -22,19 +26,28 @@ const CoursesExperience = () => {
   return (
     <section
       id="experience"
-      className="py-24 px-6 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white"
+      className="relative w-full max-w-7xl mx-auto px-6 py-24 min-h-[60vh] flex items-center justify-center"
     >
-      <div className="max-w-4xl mx-auto text-center ">
-        <h2 className="text-4xl font-bold text-white mb-10 glow-text">Experiences 📚</h2>
-        <div className="space-y-12 text-left ">
+      <div className="w-full">
+        <div className="text-center mb-16">
+          <h2 className="text-5xl font-futura font-bold neon-text-blue mb-4">Experience</h2>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            Courses and programs that shaped my approach to product, design, and code.
+          </p>
+        </div>
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
           {courses.map((course, index) => (
-            <div
+            <motion.div
               key={index}
-              className="bg-gray-800 border border-cyan-500 rounded-lg p-6 shadow-lg cursor-pointer hover:shadow-cyan-600 transition duration-300"
+              className="glass rounded-2xl border border-glass-border shadow-neon-blue/30 backdrop-blur-xl group cursor-pointer flex flex-col h-full transition-all duration-300"
+              whileHover={{ scale: 1.04, boxShadow: `0 0 32px ${course.color}, 0 0 64px #00D4FF` }}
+              transition={{ duration: 0.3 }}
             >
-              <h3 className="text-xl font-semibold text-cyan-300 mb-2">{course.title}</h3>
-              <p className="text-gray-300 leading-relaxed text-sm">{course.description}</p>
-            </div>
+              <div className="p-8 flex-1 flex flex-col justify-between">
+                <h3 className="text-lg font-futura font-bold mb-2" style={{ color: course.color }}>{course.title}</h3>
+                <p className="text-sm text-gray-300 mb-4 line-clamp-4">{course.description}</p>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>
