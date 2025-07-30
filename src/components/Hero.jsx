@@ -1,31 +1,53 @@
 import { useRef } from 'react';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaArrowRight } from 'react-icons/fa';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Sphere, OrbitControls } from '@react-three/drei';
+import { Line, OrbitControls } from '@react-three/drei';
 
-function NeonOrb({ mouse }) {
+function GlowingArc({ mouse }) {
   const ref = useRef();
+  // Create arc points
+  const points = [];
+  const radius = 1.2;
+  for (let i = 0; i <= 64; i++) {
+    const angle = Math.PI * (i / 64); // 0 to PI (half-circle)
+    points.push([
+      radius * Math.cos(angle),
+      radius * Math.sin(angle),
+      0
+    ]);
+  }
   useFrame(() => {
     if (ref.current && mouse.current) {
       // Subtle parallax effect
-      ref.current.position.x = mouse.current.x * 0.5;
-      ref.current.position.y = mouse.current.y * 0.5;
+      ref.current.rotation.z = mouse.current.x * 0.2;
+      ref.current.rotation.x = mouse.current.y * 0.2;
     }
   });
   return (
-    <Sphere ref={ref} args={[1, 32, 32]}>
-      <meshPhysicalMaterial
+    <group ref={ref}>
+      <Line
+        points={points}
         color="#00D4FF"
-        emissive="#00D4FF"
-        emissiveIntensity={0.7}
-        roughness={0.2}
-        metalness={0.8}
-        clearcoat={1}
-        transparent
-        opacity={0.95}
+        lineWidth={3}
+        dashed={false}
       />
-    </Sphere>
+      {/* Glow effect: duplicate with blur and lower opacity */}
+      <Line
+        points={points}
+        color="#00D4FF"
+        lineWidth={10}
+        opacity={0.15}
+        dashed={false}
+      />
+      <Line
+        points={points}
+        color="#00D4FF"
+        lineWidth={20}
+        opacity={0.07}
+        dashed={false}
+      />
+    </group>
   );
 }
 
@@ -99,12 +121,12 @@ const Hero = () => {
           ))}
         </div>
       </div>
-      {/* Right: Minimal 3D Orb */}
+      {/* Right: Minimal 3D Arc */}
       <div className="flex-1 flex items-center justify-center w-full h-72 lg:h-96">
         <Canvas camera={{ position: [0, 0, 3.5], fov: 60 }} style={{ width: '100%', height: '100%' }}>
           <ambientLight intensity={0.3} />
           <pointLight position={[5, 5, 5]} intensity={0.7} color="#00D4FF" />
-          <NeonOrb mouse={mouse} />
+          <GlowingArc mouse={mouse} />
           <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
         </Canvas>
       </div>
