@@ -1,26 +1,50 @@
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaEnvelope, FaArrowRight } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaArrowRight, FaDownload } from 'react-icons/fa';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 
-function BrowserWindow3D() {
+function CodeBracket3D() {
   const group = useRef();
+  // Generate points for a 3D curly bracket shape (approximate)
+  // We'll use a series of tubes to form a stylized "{" shape
+  // For simplicity, use a parametric curve
+  const points = [];
+  for (let t = 0; t <= Math.PI; t += Math.PI / 32) {
+    const x = Math.sin(t) * 0.7;
+    const y = Math.cos(t) * 1.1;
+    points.push([x, y, 0]);
+  }
+  for (let t = Math.PI; t <= 2 * Math.PI; t += Math.PI / 32) {
+    const x = Math.sin(t) * 0.7 + 0.7;
+    const y = Math.cos(t) * 1.1;
+    points.push([x, y, 0]);
+  }
   useFrame(() => {
     if (group.current) {
-      group.current.rotation.x += 0.003;
-      group.current.rotation.y += 0.004;
+      group.current.rotation.x += 0.004;
+      group.current.rotation.y += 0.006;
     }
   });
   return (
     <group ref={group}>
-      {/* Main window body */}
-      <mesh castShadow receiveShadow position={[0, 0, 0]}>
-        <boxGeometry args={[2.2, 1.4, 0.12]} />
+      {/* Main bracket */}
+      <mesh>
+        <tubeGeometry args={[
+          { getPoint: (i) => {
+            const idx = Math.floor(i * (points.length - 1));
+            const [x, y, z] = points[idx];
+            return { x, y, z };
+          },
+          tubularSegments: points.length - 1,
+          radius: 0.09,
+          radialSegments: 16,
+          closed: false,
+        }]} />
         <meshPhysicalMaterial
-          color="#181C23"
+          color="#F96902"
           roughness={0.18}
-          metalness={0.4}
+          metalness={0.6}
           clearcoat={0.7}
           clearcoatRoughness={0.1}
           transmission={0.7}
@@ -28,38 +52,13 @@ function BrowserWindow3D() {
           ior={1.2}
           reflectivity={0.3}
           transparent
-          opacity={0.92}
+          opacity={0.95}
         />
       </mesh>
-      {/* Orange accent bar */}
-      <mesh position={[0, 0.7, 0.07]}>
-        <boxGeometry args={[2.2, 0.18, 0.13]} />
-        <meshPhysicalMaterial
-          color="#F96902"
-          roughness={0.1}
-          metalness={0.7}
-          clearcoat={0.8}
-          transmission={0.5}
-          opacity={0.98}
-        />
-      </mesh>
-      {/* Window buttons (left) */}
-      <mesh position={[-0.95, 0.7, 0.14]}>
-        <sphereGeometry args={[0.04, 16, 16]} />
-        <meshStandardMaterial color="#fff" />
-      </mesh>
-      <mesh position={[-0.85, 0.7, 0.14]}>
-        <sphereGeometry args={[0.04, 16, 16]} />
-        <meshStandardMaterial color="#fff" />
-      </mesh>
-      <mesh position={[-0.75, 0.7, 0.14]}>
-        <sphereGeometry args={[0.04, 16, 16]} />
-        <meshStandardMaterial color="#fff" />
-      </mesh>
-      {/* Subtle shadow under window */}
-      <mesh position={[0, -0.8, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[1.1, 32]} />
-        <meshBasicMaterial color="#000" transparent opacity={0.18} />
+      {/* Subtle shadow under bracket */}
+      <mesh position={[0.35, -1.3, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[0.7, 32]} />
+        <meshBasicMaterial color="#000" transparent opacity={0.15} />
       </mesh>
     </group>
   );
@@ -98,15 +97,27 @@ const Hero = () => {
         >
           I create modern, interactive, and visually stunning web experiences using React, Three.js, and the latest UI trends.
         </motion.p>
-        <motion.a
-          href="#works"
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.97 }}
-          className="group relative inline-flex items-center gap-3 px-7 py-3 glass rounded-full text-white font-semibold text-lg shadow-orange hover:shadow-orange transition-all duration-300 bg-primary/90"
-        >
-          <span>View My Work</span>
-          <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
-        </motion.a>
+        <div className="flex flex-col sm:flex-row gap-4 w-full">
+          <motion.a
+            href="#works"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+            className="group flex-1 flex items-center justify-center gap-3 px-7 py-3 glass rounded-full text-white font-semibold text-lg shadow-orange hover:shadow-orange transition-all duration-300 bg-primary/90"
+          >
+            <span>View My Work</span>
+            <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
+          </motion.a>
+          <motion.a
+            href="/resume.pdf"
+            download
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+            className="group flex-1 flex items-center justify-center gap-3 px-7 py-3 glass rounded-full text-primary font-semibold text-lg border-2 border-primary bg-white/90 hover:bg-primary hover:text-white hover:shadow-orange transition-all duration-300"
+          >
+            <FaDownload className="text-xl" />
+            <span>Download Resume</span>
+          </motion.a>
+        </div>
         <div className="flex gap-3 mt-6">
           {[
             { icon: FaGithub, href: "https://github.com/Sepidehpakseresht", label: "GitHub" },
@@ -126,12 +137,12 @@ const Hero = () => {
           ))}
         </div>
       </div>
-      {/* Right: Interactive 3D Browser Window */}
+      {/* Right: Interactive 3D Code Bracket */}
       <div className="flex-1 flex items-center justify-center w-full h-72 lg:h-96">
-        <Canvas camera={{ position: [0, 0, 3.5], fov: 60 }} style={{ width: '100%', height: '100%' }} shadows>
+        <Canvas camera={{ position: [0.5, 0, 3.5], fov: 60 }} style={{ width: '100%', height: '100%' }} shadows>
           <ambientLight intensity={0.4} />
           <directionalLight position={[2, 4, 2]} intensity={0.7} color="#F96902" castShadow />
-          <BrowserWindow3D />
+          <CodeBracket3D />
           <OrbitControls enableZoom={false} enablePan={false} />
         </Canvas>
       </div>
