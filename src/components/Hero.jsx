@@ -6,41 +6,20 @@ import { OrbitControls } from '@react-three/drei';
 
 function CodeBracket3D() {
   const group = useRef();
-  // Generate points for a 3D curly bracket shape (approximate)
-  // We'll use a series of tubes to form a stylized "{" shape
-  // For simplicity, use a parametric curve
-  const points = [];
-  for (let t = 0; t <= Math.PI; t += Math.PI / 32) {
-    const x = Math.sin(t) * 0.7;
-    const y = Math.cos(t) * 1.1;
-    points.push([x, y, 0]);
-  }
-  for (let t = Math.PI; t <= 2 * Math.PI; t += Math.PI / 32) {
-    const x = Math.sin(t) * 0.7 + 0.7;
-    const y = Math.cos(t) * 1.1;
-    points.push([x, y, 0]);
-  }
+  
   useFrame(() => {
     if (group.current) {
-      group.current.rotation.x += 0.004;
-      group.current.rotation.y += 0.006;
+      // Subtle automatic rotation
+      group.current.rotation.x += 0.002;
+      group.current.rotation.y += 0.003;
     }
   });
+  
   return (
     <group ref={group}>
-      {/* Main bracket */}
-      <mesh>
-        <tubeGeometry args={[
-          { getPoint: (i) => {
-            const idx = Math.floor(i * (points.length - 1));
-            const [x, y, z] = points[idx];
-            return { x, y, z };
-          },
-          tubularSegments: points.length - 1,
-          radius: 0.09,
-          radialSegments: 16,
-          closed: false,
-        }]} />
+      {/* Main bracket - simplified for better rotation */}
+      <mesh position={[0, 0, 0]}>
+        <cylinderGeometry args={[0.8, 0.8, 0.2, 32, 1, true, 0, Math.PI]} />
         <meshPhysicalMaterial
           color="#F96902"
           roughness={0.18}
@@ -55,9 +34,28 @@ function CodeBracket3D() {
           opacity={0.95}
         />
       </mesh>
+      
+      {/* Additional bracket elements for more complex shape */}
+      <mesh position={[0.4, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
+        <cylinderGeometry args={[0.6, 0.6, 0.15, 32, 1, true, 0, Math.PI]} />
+        <meshPhysicalMaterial
+          color="#F96902"
+          roughness={0.18}
+          metalness={0.6}
+          clearcoat={0.7}
+          clearcoatRoughness={0.1}
+          transmission={0.7}
+          thickness={0.4}
+          ior={1.2}
+          reflectivity={0.3}
+          transparent
+          opacity={0.9}
+        />
+      </mesh>
+      
       {/* Subtle shadow under bracket */}
-      <mesh position={[0.35, -1.3, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[0.7, 32]} />
+      <mesh position={[0.2, -1.2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[1.2, 32]} />
         <meshBasicMaterial color="#000" transparent opacity={0.15} />
       </mesh>
     </group>
@@ -69,9 +67,10 @@ function FloatingCube() {
   
   useFrame((state) => {
     if (cubeRef.current) {
-      cubeRef.current.rotation.x += 0.01;
-      cubeRef.current.rotation.y += 0.01;
-      cubeRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
+      // More pronounced rotation
+      cubeRef.current.rotation.x += 0.015;
+      cubeRef.current.rotation.y += 0.015;
+      cubeRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.8) * 0.15;
     }
   });
 
@@ -102,12 +101,13 @@ const Hero = () => {
     >
       {/* Left: Modern Intro */}
       <div className="flex-1 flex flex-col gap-8 items-start justify-center max-w-xl relative">
-        {/* Floating 3D Cube */}
+        {/* Floating 3D Cube with rotation controls */}
         <div className="absolute -left-20 top-10 w-32 h-32 opacity-60">
           <Canvas camera={{ position: [0, 0, 3], fov: 50 }}>
             <ambientLight intensity={0.3} />
             <directionalLight position={[1, 1, 1]} intensity={0.5} color="#F96902" />
             <FloatingCube />
+            <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={2} />
           </Canvas>
         </div>
         
@@ -175,13 +175,21 @@ const Hero = () => {
           ))}
         </div>
       </div>
-      {/* Right: Interactive 3D Code Bracket */}
+      {/* Right: Interactive 3D Code Bracket with full rotation controls */}
       <div className="flex-1 flex items-center justify-center w-full h-72 lg:h-96">
-        <Canvas camera={{ position: [0.5, 0, 3.5], fov: 60 }} style={{ width: '100%', height: '100%' }} shadows>
+        <Canvas camera={{ position: [0, 0, 4], fov: 60 }} style={{ width: '100%', height: '100%' }} shadows>
           <ambientLight intensity={0.4} />
           <directionalLight position={[2, 4, 2]} intensity={0.7} color="#F96902" castShadow />
           <CodeBracket3D />
-          <OrbitControls enableZoom={false} enablePan={false} />
+          <OrbitControls 
+            enableZoom={false} 
+            enablePan={false} 
+            autoRotate 
+            autoRotateSpeed={1}
+            enableDamping
+            dampingFactor={0.05}
+            rotateSpeed={0.5}
+          />
         </Canvas>
       </div>
     </section>
