@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&family=Fira+Code:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Poppins:wght@600;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -9,170 +9,50 @@ html {
 }
 
 body {
-  background: linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 50%, #16213E 100%);
-  color: #ffffff;
+  background: #0B0E13;
+  color: #fff;
   font-family: 'Inter', sans-serif;
 }
 
-/* Futuristic scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
-
-::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-}
-
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #00D4FF, #FF0080);
+  background: #181C23;
   border-radius: 4px;
 }
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #00FFFF, #FF0080);
+::-webkit-scrollbar-track {
+  background: #0B0E13;
 }
 
-/* Glassmorphism utilities */
 .glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.12);
 }
 
-.glass-dark {
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.text-primary {
+  color: #F96902;
+}
+.bg-primary {
+  background-color: #F96902;
+}
+.shadow-orange {
+  box-shadow: 0 0 16px #F96902;
 }
 
-/* Neon text effects */
-.neon-text-blue {
-  text-shadow: 
-    0 0 5px #00D4FF,
-    0 0 10px #00D4FF,
-    0 0 15px #00D4FF,
-    0 0 20px #00D4FF;
-}
+/* Remove old neon/glow classes */
 
-.neon-text-pink {
-  text-shadow: 
-    0 0 5px #FF0080,
-    0 0 10px #FF0080,
-    0 0 15px #FF0080,
-    0 0 20px #FF0080;
-}
-
-.neon-text-purple {
-  text-shadow: 
-    0 0 5px #7B2CBF,
-    0 0 10px #7B2CBF,
-    0 0 15px #7B2CBF,
-    0 0 20px #7B2CBF;
-}
-
-/* Glowing borders */
-.neon-border-blue {
-  box-shadow: 
-    0 0 5px #00D4FF,
-    0 0 10px #00D4FF,
-    0 0 15px #00D4FF,
-    inset 0 0 5px #00D4FF;
-}
-
-.neon-border-pink {
-  box-shadow: 
-    0 0 5px #FF0080,
-    0 0 10px #FF0080,
-    0 0 15px #FF0080,
-    inset 0 0 5px #FF0080;
-}
-
-/* Hover effects */
-.hover-glow:hover {
-  box-shadow: 
-    0 0 10px currentColor,
-    0 0 20px currentColor,
-    0 0 30px currentColor;
-  transition: all 0.3s ease;
-}
-
-/* Gradient backgrounds */
-.bg-gradient-futuristic {
-  background: linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 50%, #16213E 100%);
-}
-
-.bg-gradient-neon {
-  background: linear-gradient(45deg, #00D4FF, #FF0080, #7B2CBF);
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease infinite;
-}
-
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Enhanced animations */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-
-@keyframes neon-flicker {
-  0% { 
-    text-shadow: 
-      0 0 5px #00D4FF,
-      0 0 10px #00D4FF,
-      0 0 15px #00D4FF;
-  }
-  100% { 
-    text-shadow: 
-      0 0 2px #00D4FF,
-      0 0 5px #00D4FF,
-      0 0 8px #00D4FF;
-  }
-}
-
-/* Three.js canvas styling */
-.three-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-
-/* Responsive utilities */
-@media (max-width: 768px) {
-  .glass {
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-  }
-}
-
-/* Selection styling */
-::selection {
-  background: rgba(0, 212, 255, 0.3);
-  color: #ffffff;
-}
-
-/* Focus styles for accessibility */
-.focus-neon:focus {
+/* Minimal focus style */
+.focus-orange:focus {
   outline: none;
-  box-shadow: 
-    0 0 5px #00D4FF,
-    0 0 10px #00D4FF,
-    0 0 15px #00D4FF;
+  box-shadow: 0 0 0 2px #F96902;
+}
+
+::selection {
+  background: #F96902;
+  color: #fff;
 }
 
 

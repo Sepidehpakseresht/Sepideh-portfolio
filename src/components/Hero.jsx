@@ -2,83 +2,55 @@ import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaArrowRight } from 'react-icons/fa';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Line, OrbitControls } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 
-function GlowingArc({ mouse }) {
-  const ref = useRef();
-  // Create arc points
-  const points = [];
-  const radius = 1.2;
-  for (let i = 0; i <= 64; i++) {
-    const angle = Math.PI * (i / 64); // 0 to PI (half-circle)
-    points.push([
-      radius * Math.cos(angle),
-      radius * Math.sin(angle),
-      0
-    ]);
-  }
-  useFrame(() => {
-    if (ref.current && mouse.current) {
-      // Subtle parallax effect
-      ref.current.rotation.z = mouse.current.x * 0.2;
-      ref.current.rotation.x = mouse.current.y * 0.2;
+function RotatingTorus() {
+  const mesh = useRef();
+  useFrame((state) => {
+    if (mesh.current) {
+      mesh.current.rotation.x += 0.005;
+      mesh.current.rotation.y += 0.007;
     }
   });
   return (
-    <group ref={ref}>
-      <Line
-        points={points}
-        color="#00D4FF"
-        lineWidth={3}
-        dashed={false}
+    <mesh ref={mesh} castShadow receiveShadow>
+      <torusGeometry args={[1, 0.32, 32, 96]} />
+      <meshPhysicalMaterial
+        color="#F96902"
+        roughness={0.15}
+        metalness={0.7}
+        clearcoat={0.7}
+        clearcoatRoughness={0.1}
+        transmission={0.7}
+        thickness={0.5}
+        ior={1.3}
+        reflectivity={0.5}
+        transparent
+        opacity={0.95}
       />
-      {/* Glow effect: duplicate with blur and lower opacity */}
-      <Line
-        points={points}
-        color="#00D4FF"
-        lineWidth={10}
-        opacity={0.15}
-        dashed={false}
-      />
-      <Line
-        points={points}
-        color="#00D4FF"
-        lineWidth={20}
-        opacity={0.07}
-        dashed={false}
-      />
-    </group>
+    </mesh>
   );
 }
 
 const Hero = () => {
-  const mouse = useRef({ x: 0, y: 0 });
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    mouse.current = {
-      x: ((e.clientX - rect.left) / rect.width - 0.5) * 2,
-      y: -((e.clientY - rect.top) / rect.height - 0.5) * 2,
-    };
-  };
-
   return (
     <section
       id="home"
       className="relative w-full max-w-7xl mx-auto px-6 py-32 min-h-[70vh] flex flex-col lg:flex-row items-center justify-between"
-      onMouseMove={handleMouseMove}
+      style={{ background: '#0B0E13' }}
     >
-      {/* Left: Minimal Intro */}
+      {/* Left: Modern Intro */}
       <div className="flex-1 flex flex-col gap-8 items-start justify-center max-w-xl">
         <motion.h1
-          className="text-5xl font-futura font-bold text-white mb-2"
+          className="text-5xl md:text-6xl font-display font-extrabold text-white mb-2 leading-tight"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <span className="neon-text-blue">Sepideh Pakseresht</span>
+          Hi, I’m <span className="text-primary">Sepideh Pakseresht</span>
         </motion.h1>
         <motion.h2
-          className="text-xl text-gray-300 font-medium mb-4"
+          className="text-2xl md:text-3xl font-semibold text-white/80 mb-4"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -86,18 +58,18 @@ const Hero = () => {
           Front-End Developer & UI Engineer
         </motion.h2>
         <motion.p
-          className="text-gray-400 text-lg mb-6"
+          className="text-gray-400 text-lg mb-6 max-w-lg"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          I build minimal, interactive, and futuristic web experiences with React, Three.js, and Tailwind CSS.
+          I create modern, interactive, and visually stunning web experiences using React, Three.js, and the latest UI trends.
         </motion.p>
         <motion.a
           href="#works"
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.97 }}
-          className="group relative inline-flex items-center gap-3 px-7 py-3 glass rounded-full text-white font-semibold text-lg shadow-neon-blue hover:shadow-neon-pink transition-all duration-300"
+          className="group relative inline-flex items-center gap-3 px-7 py-3 glass rounded-full text-white font-semibold text-lg shadow-orange hover:shadow-orange transition-all duration-300 bg-primary/90"
         >
           <span>View My Work</span>
           <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
@@ -113,21 +85,21 @@ const Hero = () => {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.15, boxShadow: "0 0 8px #00D4FF" }}
-              className="w-10 h-10 rounded-full glass flex items-center justify-center text-neon-blue hover:text-white hover:shadow-neon-blue transition-all duration-300"
+              whileHover={{ scale: 1.15, boxShadow: "0 0 8px #F96902" }}
+              className="w-10 h-10 rounded-full glass flex items-center justify-center text-primary hover:text-white hover:shadow-orange transition-all duration-300"
             >
               <social.icon className="text-lg" />
             </motion.a>
           ))}
         </div>
       </div>
-      {/* Right: Minimal 3D Arc */}
+      {/* Right: Interactive 3D Torus */}
       <div className="flex-1 flex items-center justify-center w-full h-72 lg:h-96">
-        <Canvas camera={{ position: [0, 0, 3.5], fov: 60 }} style={{ width: '100%', height: '100%' }}>
-          <ambientLight intensity={0.3} />
-          <pointLight position={[5, 5, 5]} intensity={0.7} color="#00D4FF" />
-          <GlowingArc mouse={mouse} />
-          <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
+        <Canvas camera={{ position: [0, 0, 3.5], fov: 60 }} style={{ width: '100%', height: '100%' }} shadows>
+          <ambientLight intensity={0.4} />
+          <directionalLight position={[2, 4, 2]} intensity={0.7} color="#F96902" castShadow />
+          <RotatingTorus />
+          <OrbitControls enableZoom={false} enablePan={false} />
         </Canvas>
       </div>
     </section>
