@@ -108,7 +108,7 @@ const Skills = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto">
+      <div className="relative z-10 w-full max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -126,16 +126,16 @@ const Skills = () => {
         </motion.div>
 
         {/* Skills Grid */}
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* 3D Skills Visualization */}
           <motion.div
             initial={{ opacity: 0, x: -100 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
-            className="relative h-96 lg:h-[600px] flex items-center justify-center"
+            className="relative h-[400px] lg:h-[600px] flex items-center justify-center"
           >
-            <div className="w-full h-full">
+            <div className="w-full h-full flex items-center justify-center">
               <ThreeScene className="w-full h-full">
                 <RotatingSkills 
                   skills={skills} 
@@ -152,7 +152,7 @@ const Skills = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="space-y-8 flex flex-col justify-center h-full"
           >
             <AnimatePresence mode="wait">
               {selectedSkill ? (
@@ -162,7 +162,7 @@ const Skills = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -50 }}
                   transition={{ duration: 0.5 }}
-                  className="glass rounded-2xl p-8 backdrop-blur-xl"
+                  className="glass rounded-2xl p-8 backdrop-blur-xl w-full max-w-lg mx-auto"
                 >
                   {/* Skill Header */}
                   <div className="flex items-center gap-4 mb-6">
@@ -222,7 +222,7 @@ const Skills = () => {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="glass rounded-2xl p-8 backdrop-blur-xl text-center"
+                  className="glass rounded-2xl p-8 backdrop-blur-xl w-full max-w-lg mx-auto text-center"
                 >
                   <div className="text-6xl mb-4">🎯</div>
                   <h3 className="text-2xl font-futura font-bold text-white mb-4">
@@ -248,7 +248,7 @@ const Skills = () => {
           <h3 className="text-3xl font-futura font-bold text-white text-center mb-12 neon-text-pink">
             Additional Technologies
           </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 max-w-4xl mx-auto">
             {[
               { name: "HTML5", icon: "🌐" },
               { name: "CSS3", icon: "🎨" },

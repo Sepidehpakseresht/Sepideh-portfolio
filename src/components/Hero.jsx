@@ -17,22 +17,22 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[600px]">
           {/* Left Column - Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, ease: 'easeOut' }}
-            className="space-y-8"
+            className="space-y-10 flex flex-col justify-center h-full"
           >
             {/* Staggered Name */}
-            <div className="space-y-2">
+            <div className="space-y-2 text-left">
               <motion.h1
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-6xl lg:text-7xl font-futura font-bold text-white neon-text-blue"
+                className="text-6xl lg:text-7xl font-futura font-bold text-white neon-text-blue leading-tight"
               >
                 Sepideh
               </motion.h1>
@@ -40,7 +40,7 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-6xl lg:text-7xl font-futura font-bold text-white neon-text-pink ml-8"
+                className="text-6xl lg:text-7xl font-futura font-bold text-white neon-text-pink ml-8 leading-tight"
               >
                 Pakseresht
               </motion.h1>
@@ -51,7 +51,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="space-y-4"
+              className="space-y-4 text-left"
             >
               <p className="text-xl lg:text-2xl text-gray-300 font-light">
                 Creative Front-End Developer
@@ -81,13 +81,13 @@ const Hero = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="text-gray-400 text-lg leading-relaxed max-w-lg"
+              className="text-gray-400 text-lg leading-relaxed max-w-xl text-left"
             >
               Crafting immersive digital experiences with cutting-edge technologies. 
               Specializing in modern web development with a focus on performance and user experience.
             </motion.p>
 
-            {/* CTA Button */}
+            {/* CTA Button & Socials */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -137,9 +137,9 @@ const Hero = () => {
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.5 }}
-            className="relative h-96 lg:h-[500px] flex items-center justify-center"
+            className="relative h-[400px] lg:h-[500px] flex items-center justify-center"
           >
-            <div className="relative w-full h-full">
+            <div className="relative w-full h-full flex items-center justify-center">
               <ThreeScene className="w-full h-full">
                 <GlowingArc position={[0, 0, 0]} scale={2} color="#00D4FF" />
                 <GlowingArc position={[2, 1, 0]} scale={1.2} color="#FF0080" />
