@@ -4,170 +4,158 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaArrowRight, FaDownload } from 'reac
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 
-function BeautifulAvatar3D() {
+function Laptop3D() {
   const group = useRef();
-  const hairGroup = useRef();
+  const screenGroup = useRef();
   
   useFrame((state) => {
     if (group.current) {
       // Smooth rotation
       group.current.rotation.y += 0.003;
     }
-    if (hairGroup.current) {
-      // Subtle hair movement
-      hairGroup.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
+    if (screenGroup.current) {
+      // Subtle screen movement
+      screenGroup.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.05;
     }
   });
   
   return (
     <group ref={group}>
-      {/* Main head - more elegant shape */}
-      <mesh position={[0, 0, 0]}>
-        <sphereGeometry args={[1.1, 32, 32]} />
+      {/* Laptop Base/Bottom */}
+      <mesh position={[0, -0.1, 0]}>
+        <boxGeometry args={[2.2, 0.15, 1.6]} />
         <meshPhysicalMaterial
-          color="#2A2F38"
-          roughness={0.2}
-          metalness={0.3}
+          color="#1a1a1a"
+          roughness={0.3}
+          metalness={0.7}
           clearcoat={0.8}
           clearcoatRoughness={0.1}
-          transmission={0.1}
-          thickness={0.2}
         />
       </mesh>
       
-      {/* Elegant face mask */}
-      <mesh position={[0, 0, 1.05]}>
-        <sphereGeometry args={[0.85, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2]} />
-        <meshPhysicalMaterial
-          color="#F96902"
-          roughness={0.15}
-          metalness={0.4}
-          clearcoat={0.9}
-          clearcoatRoughness={0.05}
-          transmission={0.3}
-          thickness={0.3}
-          transparent
-          opacity={0.85}
-        />
-      </mesh>
-      
-      {/* Geometric "S" initial - more stylized */}
-      <group position={[0, 0, 1.15]}>
-        {/* Main S shape */}
-        <mesh>
-          <cylinderGeometry args={[0.15, 0.15, 0.8, 8]} />
+      {/* Laptop Screen */}
+      <group ref={screenGroup} position={[0, 0.8, -0.3]} rotation={[0.3, 0, 0]}>
+        {/* Screen Frame */}
+        <mesh position={[0, 0, 0]}>
+          <boxGeometry args={[2.4, 0.1, 1.8]} />
           <meshPhysicalMaterial
-            color="#fff"
-            roughness={0.1}
-            metalness={0.8}
-            clearcoat={0.9}
-            clearcoatRoughness={0.05}
-          />
-        </mesh>
-        {/* Curved parts of S */}
-        <mesh position={[0.1, 0.2, 0]} rotation={[0, 0, Math.PI / 3]}>
-          <cylinderGeometry args={[0.15, 0.15, 0.4, 8]} />
-          <meshPhysicalMaterial
-            color="#fff"
-            roughness={0.1}
-            metalness={0.8}
-            clearcoat={0.9}
-            clearcoatRoughness={0.05}
-          />
-        </mesh>
-        <mesh position={[-0.1, -0.2, 0]} rotation={[0, 0, -Math.PI / 3]}>
-          <cylinderGeometry args={[0.15, 0.15, 0.4, 8]} />
-          <meshPhysicalMaterial
-            color="#fff"
-            roughness={0.1}
-            metalness={0.8}
-            clearcoat={0.9}
-            clearcoatRoughness={0.05}
-          />
-        </mesh>
-      </group>
-      
-      {/* Flowing hair/headpiece */}
-      <group ref={hairGroup} position={[0, 0.2, 0.6]}>
-        {/* Main hair volume */}
-        <mesh>
-          <sphereGeometry args={[0.9, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2]} />
-          <meshPhysicalMaterial
-            color="#F96902"
+            color="#1a1a1a"
             roughness={0.3}
-            metalness={0.2}
-            clearcoat={0.7}
-            clearcoatRoughness={0.2}
-            transmission={0.2}
-            transparent
-            opacity={0.9}
+            metalness={0.7}
+            clearcoat={0.8}
+            clearcoatRoughness={0.1}
           />
         </mesh>
         
-        {/* Flowing strands */}
-        {[...Array(6)].map((_, i) => (
-          <mesh
-            key={i}
-            position={[
-              Math.cos(i * Math.PI / 3) * 0.3,
-              -0.3 + Math.sin(i * Math.PI / 3) * 0.1,
-              -0.2
-            ]}
-            rotation={[0, 0, i * Math.PI / 3]}
-          >
-            <cylinderGeometry args={[0.05, 0.02, 0.8, 8]} />
-            <meshPhysicalMaterial
-              color="#F96902"
-              roughness={0.4}
-              metalness={0.1}
-              clearcoat={0.6}
-              clearcoatRoughness={0.3}
-              transparent
-              opacity={0.7}
-            />
+        {/* Screen Display */}
+        <mesh position={[0, 0, 0.05]}>
+          <boxGeometry args={[2.2, 0.05, 1.6]} />
+          <meshPhysicalMaterial
+            color="#000"
+            roughness={0.1}
+            metalness={0.1}
+            clearcoat={0.9}
+            clearcoatRoughness={0.05}
+          />
+        </mesh>
+        
+        {/* Screen Content - Code Editor */}
+        <mesh position={[0, 0, 0.08]}>
+          <planeGeometry args={[2.1, 1.5]} />
+          <meshBasicMaterial color="#0d1117" />
+        </mesh>
+        
+        {/* Code Lines */}
+        {[...Array(8)].map((_, i) => (
+          <mesh key={i} position={[-0.8, 0.6 - i * 0.15, 0.09]}>
+            <planeGeometry args={[1.4, 0.02]} />
+            <meshBasicMaterial color={i % 2 === 0 ? "#58a6ff" : "#7c3aed"} />
           </mesh>
         ))}
+        
+        {/* Cursor */}
+        <mesh position={[-0.2, 0.1, 0.09]}>
+          <planeGeometry args={[0.02, 0.15]} />
+          <meshBasicMaterial color="#f96902" />
+        </mesh>
       </group>
       
-      {/* Elegant neck */}
-      <mesh position={[0, -1.3, 0]}>
-        <cylinderGeometry args={[0.35, 0.35, 0.8, 16]} />
+      {/* Keyboard */}
+      <mesh position={[0, 0.05, 0.2]}>
+        <boxGeometry args={[2, 0.05, 1.2]} />
         <meshPhysicalMaterial
-          color="#2A2F38"
-          roughness={0.25}
+          color="#2a2a2a"
+          roughness={0.4}
           metalness={0.2}
           clearcoat={0.6}
           clearcoatRoughness={0.2}
         />
       </mesh>
       
-      {/* Shoulder piece */}
-      <mesh position={[0, -1.8, 0]}>
-        <boxGeometry args={[2.2, 0.25, 0.7]} />
+      {/* Keyboard Keys */}
+      {[...Array(6)].map((_, row) => 
+        [...Array(8)].map((_, col) => (
+          <mesh 
+            key={`${row}-${col}`} 
+            position={[
+              -0.7 + col * 0.2, 
+              0.08, 
+              0.4 - row * 0.15
+            ]}
+          >
+            <boxGeometry args={[0.15, 0.02, 0.12]} />
+            <meshPhysicalMaterial
+              color="#3a3a3a"
+              roughness={0.5}
+              metalness={0.1}
+            />
+          </mesh>
+        ))
+      )}
+      
+      {/* Trackpad */}
+      <mesh position={[0, 0.08, -0.2]}>
+        <boxGeometry args={[1.2, 0.02, 0.8]} />
         <meshPhysicalMaterial
-          color="#F96902"
-          roughness={0.25}
-          metalness={0.3}
-          clearcoat={0.7}
-          clearcoatRoughness={0.2}
-          transparent
-          opacity={0.9}
+          color="#1a1a1a"
+          roughness={0.2}
+          metalness={0.8}
+          clearcoat={0.9}
+          clearcoatRoughness={0.1}
         />
       </mesh>
       
-      {/* Floating geometric elements */}
+      {/* Laptop Logo */}
+      <mesh position={[0, 0.08, 0.65]}>
+        <planeGeometry args={[0.3, 0.1]} />
+        <meshBasicMaterial color="#f96902" />
+      </mesh>
+      
+      {/* Hinge */}
+      <mesh position={[0, 0.75, 0.2]}>
+        <cylinderGeometry args={[0.05, 0.05, 2.4, 8]} />
+        <meshPhysicalMaterial
+          color="#333"
+          roughness={0.4}
+          metalness={0.8}
+          clearcoat={0.7}
+          clearcoatRoughness={0.2}
+        />
+      </mesh>
+      
+      {/* Floating Code Particles */}
       {[...Array(12)].map((_, i) => (
         <mesh
           key={i}
           position={[
-            Math.cos(i * Math.PI / 6) * 2.5,
-            Math.sin(i * Math.PI / 6) * 0.8,
-            Math.sin(i * Math.PI / 6) * 1.5
+            Math.cos(i * Math.PI / 6) * 3,
+            Math.sin(i * Math.PI / 6) * 0.5 + 1,
+            Math.sin(i * Math.PI / 6) * 2
           ]}
         >
-          <octahedronGeometry args={[0.08]} />
+          <boxGeometry args={[0.05, 0.05, 0.05]} />
           <meshPhysicalMaterial
-            color="#F96902"
+            color="#f96902"
             roughness={0.2}
             metalness={0.6}
             clearcoat={0.8}
@@ -178,10 +166,10 @@ function BeautifulAvatar3D() {
         </mesh>
       ))}
       
-      {/* Subtle shadow */}
-      <mesh position={[0, -2.3, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[1.8, 32]} />
-        <meshBasicMaterial color="#000" transparent opacity={0.15} />
+      {/* Subtle shadow under laptop */}
+      <mesh position={[0, -0.3, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[2, 32]} />
+        <meshBasicMaterial color="#000" transparent opacity={0.2} />
       </mesh>
     </group>
   );
@@ -260,14 +248,14 @@ const Hero = () => {
           ))}
         </div>
       </div>
-      {/* Right: Beautiful 3D Avatar */}
+      {/* Right: 3D Laptop */}
       <div className="flex-1 flex items-center justify-center w-full h-72 lg:h-96">
-        <Canvas camera={{ position: [0, 0, 5], fov: 60 }} style={{ width: '100%', height: '100%' }} shadows>
-          <ambientLight intensity={0.3} />
+        <Canvas camera={{ position: [0, 0, 6], fov: 60 }} style={{ width: '100%', height: '100%' }} shadows>
+          <ambientLight intensity={0.4} />
           <directionalLight position={[2, 4, 2]} intensity={0.8} color="#F96902" castShadow />
           <pointLight position={[-2, 2, 2]} intensity={0.4} color="#F96902" />
           <pointLight position={[0, -2, 2]} intensity={0.3} color="#F96902" />
-          <BeautifulAvatar3D />
+          <Laptop3D />
           <OrbitControls 
             enableZoom={false} 
             enablePan={false} 
