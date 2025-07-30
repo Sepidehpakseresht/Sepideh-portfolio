@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaReact, FaJs, FaNodeJs, FaCss3Alt, FaHtml5, FaGitAlt } from 'react-icons/fa';
-import { SiTailwindcss, SiTypescript, SiThreejs } from 'react-icons/si';
+import { FaReact, FaJs, FaNodeJs, FaCss3Alt, FaHtml5, FaGitAlt, FaCube } from 'react-icons/fa';
+import { SiTailwindcss, SiTypescript } from 'react-icons/si';
 
 const skills = [
   {
@@ -17,7 +17,7 @@ const skills = [
   },
   {
     name: "Three.js",
-    icon: <SiThreejs className="text-4xl text-neon-pink" />,
+    icon: <FaCube className="text-4xl text-neon-pink" />,
     color: "#FF0080",
     short: "3D graphics and interactive web experiences.",
     details: [
