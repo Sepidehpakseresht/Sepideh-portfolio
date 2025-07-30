@@ -6,13 +6,11 @@ import Works from './components/Works';
 import Experience from './components/Experienxe/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import Navigation from './components/Navigation';
 
 function App() {
   return (
-    <div className="bg-gradient-futuristic text-white min-h-screen">
+    <div className="bg-background text-white min-h-screen">
       <Header />
-      <Navigation />
       <main>
         <Hero />
         <AboutMe />

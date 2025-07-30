@@ -4,91 +4,117 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaArrowRight, FaDownload } from 'reac
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 
-function CodeBracket3D() {
+function Avatar3D() {
   const group = useRef();
   
   useFrame(() => {
     if (group.current) {
-      // Subtle automatic rotation
-      group.current.rotation.x += 0.002;
-      group.current.rotation.y += 0.003;
+      // Smooth rotation
+      group.current.rotation.y += 0.005;
     }
   });
   
   return (
     <group ref={group}>
-      {/* Main bracket - simplified for better rotation */}
+      {/* Head shape */}
       <mesh position={[0, 0, 0]}>
-        <cylinderGeometry args={[0.8, 0.8, 0.2, 32, 1, true, 0, Math.PI]} />
+        <sphereGeometry args={[1.2, 32, 32]} />
         <meshPhysicalMaterial
-          color="#F96902"
-          roughness={0.18}
-          metalness={0.6}
-          clearcoat={0.7}
-          clearcoatRoughness={0.1}
-          transmission={0.7}
-          thickness={0.4}
-          ior={1.2}
-          reflectivity={0.3}
-          transparent
-          opacity={0.95}
+          color="#181C23"
+          roughness={0.3}
+          metalness={0.1}
+          clearcoat={0.5}
+          clearcoatRoughness={0.2}
         />
       </mesh>
       
-      {/* Additional bracket elements for more complex shape */}
-      <mesh position={[0.4, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[0.6, 0.6, 0.15, 32, 1, true, 0, Math.PI]} />
+      {/* Face details */}
+      <mesh position={[0, 0, 1.15]}>
+        <circleGeometry args={[0.8, 32]} />
         <meshPhysicalMaterial
           color="#F96902"
-          roughness={0.18}
-          metalness={0.6}
-          clearcoat={0.7}
+          roughness={0.2}
+          metalness={0.3}
+          clearcoat={0.8}
           clearcoatRoughness={0.1}
-          transmission={0.7}
-          thickness={0.4}
-          ior={1.2}
-          reflectivity={0.3}
           transparent
           opacity={0.9}
         />
       </mesh>
       
-      {/* Subtle shadow under bracket */}
-      <mesh position={[0.2, -1.2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[1.2, 32]} />
-        <meshBasicMaterial color="#000" transparent opacity={0.15} />
+      {/* Initial "S" on face */}
+      <mesh position={[0, 0, 1.2]}>
+        <planeGeometry args={[0.6, 0.6]} />
+        <meshBasicMaterial
+          color="#fff"
+          transparent
+          opacity={0.95}
+        />
       </mesh>
+      
+      {/* Hair/Head covering */}
+      <mesh position={[0, 0.3, 0.8]}>
+        <sphereGeometry args={[0.9, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2]} />
+        <meshPhysicalMaterial
+          color="#F96902"
+          roughness={0.4}
+          metalness={0.2}
+          clearcoat={0.6}
+          clearcoatRoughness={0.2}
+          transparent
+          opacity={0.8}
+        />
+      </mesh>
+      
+      {/* Neck */}
+      <mesh position={[0, -1.5, 0]}>
+        <cylinderGeometry args={[0.4, 0.4, 0.6, 16]} />
+        <meshPhysicalMaterial
+          color="#181C23"
+          roughness={0.3}
+          metalness={0.1}
+        />
+      </mesh>
+      
+      {/* Shoulders */}
+      <mesh position={[0, -1.8, 0]}>
+        <boxGeometry args={[2.5, 0.3, 0.8]} />
+        <meshPhysicalMaterial
+          color="#F96902"
+          roughness={0.3}
+          metalness={0.2}
+          clearcoat={0.5}
+          clearcoatRoughness={0.2}
+          transparent
+          opacity={0.9}
+        />
+      </mesh>
+      
+      {/* Subtle shadow under avatar */}
+      <mesh position={[0, -2.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[1.5, 32]} />
+        <meshBasicMaterial color="#000" transparent opacity={0.2} />
+      </mesh>
+      
+      {/* Floating particles around avatar */}
+      {[...Array(8)].map((_, i) => (
+        <mesh
+          key={i}
+          position={[
+            Math.cos(i * Math.PI / 4) * 2,
+            Math.sin(i * Math.PI / 4) * 0.5,
+            Math.sin(i * Math.PI / 4) * 2
+          ]}
+        >
+          <sphereGeometry args={[0.05, 8, 8]} />
+          <meshBasicMaterial
+            color="#F96902"
+            transparent
+            opacity={0.6}
+          />
+        </mesh>
+      ))}
     </group>
-  );
-}
-
-function FloatingCube() {
-  const cubeRef = useRef();
-  
-  useFrame((state) => {
-    if (cubeRef.current) {
-      // More pronounced rotation
-      cubeRef.current.rotation.x += 0.015;
-      cubeRef.current.rotation.y += 0.015;
-      cubeRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.8) * 0.15;
-    }
-  });
-
-  return (
-    <mesh ref={cubeRef} position={[-2, 0, 0]}>
-      <boxGeometry args={[0.8, 0.8, 0.8]} />
-      <meshPhysicalMaterial
-        color="#F96902"
-        roughness={0.2}
-        metalness={0.8}
-        clearcoat={0.9}
-        clearcoatRoughness={0.1}
-        transmission={0.6}
-        thickness={0.5}
-        transparent
-        opacity={0.8}
-      />
-    </mesh>
   );
 }
 
@@ -100,17 +126,7 @@ const Hero = () => {
       style={{ background: '#0B0E13' }}
     >
       {/* Left: Modern Intro */}
-      <div className="flex-1 flex flex-col gap-8 items-start justify-center max-w-xl relative">
-        {/* Floating 3D Cube with rotation controls */}
-        <div className="absolute -left-20 top-10 w-32 h-32 opacity-60">
-          <Canvas camera={{ position: [0, 0, 3], fov: 50 }}>
-            <ambientLight intensity={0.3} />
-            <directionalLight position={[1, 1, 1]} intensity={0.5} color="#F96902" />
-            <FloatingCube />
-            <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={2} />
-          </Canvas>
-        </div>
-        
+      <div className="flex-1 flex flex-col gap-8 items-start justify-center max-w-xl">
         <motion.h1
           className="text-5xl md:text-6xl font-display font-extrabold text-white mb-2 leading-tight"
           initial={{ opacity: 0, y: 40 }}
@@ -175,20 +191,21 @@ const Hero = () => {
           ))}
         </div>
       </div>
-      {/* Right: Interactive 3D Code Bracket with full rotation controls */}
+      {/* Right: Interactive 3D Avatar */}
       <div className="flex-1 flex items-center justify-center w-full h-72 lg:h-96">
-        <Canvas camera={{ position: [0, 0, 4], fov: 60 }} style={{ width: '100%', height: '100%' }} shadows>
+        <Canvas camera={{ position: [0, 0, 5], fov: 60 }} style={{ width: '100%', height: '100%' }} shadows>
           <ambientLight intensity={0.4} />
           <directionalLight position={[2, 4, 2]} intensity={0.7} color="#F96902" castShadow />
-          <CodeBracket3D />
+          <pointLight position={[-2, 2, 2]} intensity={0.3} color="#F96902" />
+          <Avatar3D />
           <OrbitControls 
             enableZoom={false} 
             enablePan={false} 
             autoRotate 
-            autoRotateSpeed={1}
+            autoRotateSpeed={0.5}
             enableDamping
             dampingFactor={0.05}
-            rotateSpeed={0.5}
+            rotateSpeed={0.3}
           />
         </Canvas>
       </div>
