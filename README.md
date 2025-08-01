@@ -4,7 +4,7 @@ Welcome to my personal portfolio!
 A creative and futuristic showcase of my front-end development journey.
 
 ## 🔮 Live Demo
-👉 [sepidehpakseresht.com](https://sepidehpakseresht.com)  
+👉 [sepidehpakseresht.com](https://sepideh-portfolio-v2.vercel.app/)  
 
 ## 📁 Projects Featured
 - 🌐 Tech Immigrants — Landing page
