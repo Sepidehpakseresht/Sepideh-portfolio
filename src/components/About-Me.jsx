@@ -59,10 +59,26 @@ const AboutMe = () => {
               transition={{ duration: 0.8 }}
               className="text-center lg:text-left"
             >
-              {/* Large Avatar/Initials */}
+              {/* 3D Cube Avatar */}
               <div className="relative mb-8">
-                <div className="w-48 h-48 mx-auto lg:mx-0 rounded-full bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center border-4 border-primary/30 shadow-orange">
-                  <span className="text-6xl font-display font-bold text-primary">S</span>
+                <div className="w-48 h-48 mx-auto lg:mx-0 rounded-full bg-gradient-to-br from-background to-surface flex items-center justify-center border-4 border-primary/20 shadow-orange relative overflow-hidden">
+                  {/* 3D Cube Container */}
+                  <div className="relative w-20 h-20 flex items-center justify-center" style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}>
+                    <motion.div
+                      animate={{ rotateX: 360, rotateY: 360 }}
+                      transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                      className="relative w-16 h-16"
+                      style={{ transformStyle: 'preserve-3d' }}
+                    >
+                      {/* Cube faces */}
+                      <div className="absolute w-16 h-16 bg-primary/30 border border-primary/50" style={{ transform: 'rotateY(0deg) translateZ(8px)' }}></div>
+                      <div className="absolute w-16 h-16 bg-primary/20 border border-primary/40" style={{ transform: 'rotateY(90deg) translateZ(8px)' }}></div>
+                      <div className="absolute w-16 h-16 bg-primary/40 border border-primary/60" style={{ transform: 'rotateY(180deg) translateZ(8px)' }}></div>
+                      <div className="absolute w-16 h-16 bg-primary/25 border border-primary/45" style={{ transform: 'rotateY(-90deg) translateZ(8px)' }}></div>
+                      <div className="absolute w-16 h-16 bg-primary/35 border border-primary/55" style={{ transform: 'rotateX(90deg) translateZ(8px)' }}></div>
+                      <div className="absolute w-16 h-16 bg-primary/15 border border-primary/35" style={{ transform: 'rotateX(-90deg) translateZ(8px)' }}></div>
+                    </motion.div>
+                  </div>
                 </div>
                 {/* Floating elements around avatar */}
                 <motion.div
