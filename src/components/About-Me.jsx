@@ -61,7 +61,7 @@ const AboutMe = () => {
             >
               {/* 3D Cube Avatar */}
               <div className="relative mb-8">
-                <div className="w-48 h-48 mx-auto lg:mx-0 rounded-full bg-gradient-to-br from-background to-surface flex items-center justify-center border-4 border-primary/20 shadow-orange relative overflow-hidden">
+                <div className="w-48 h-48 mx-auto rounded-full bg-gradient-to-br from-background to-surface flex items-center justify-center border-4 border-primary/20 shadow-orange relative overflow-hidden">
                   {/* 3D Cube Container */}
                   <div className="relative w-20 h-20 flex items-center justify-center" style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}>
                     <motion.div
